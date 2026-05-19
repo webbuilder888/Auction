@@ -3,159 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEXUS AUCTION — Premium Edition</title>
+    <title>NEXUS AUCTION — Ultimate Edition</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #040612 0%, #0b0e26 100%);
-            --panel-bg: rgba(15, 20, 45, 0.8);
-            --panel-border: rgba(0, 240, 255, 0.15);
+            --bg-dark: #03050d;
+            --panel-glass: rgba(10, 15, 36, 0.7);
+            --panel-border: rgba(0, 240, 255, 0.25);
             --neon-blue: #00f0ff;
             --neon-green: #00ff66;
             --neon-red: #ff3366;
-            --neon-purple: #a855f7;
+            --neon-purple: #b55fe6;
             --neon-diamond: #00e5ff;
             --text-white: #ffffff;
+            --text-muted: #7e8ea6;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background: var(--bg-gradient);
+            background: var(--bg-dark);
             color: var(--text-white);
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* PREMIUM GLASS HEADER */
+        /* LIVE HIGH-TECH ANIMATED BACKGROUND */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(181, 95, 230, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(3, 5, 13, 1) 0%, rgba(5, 9, 24, 1) 100%);
+            z-index: -2;
+            animation: bgShift 25s infinite linear;
+        }
+
+        @keyframes bgShift {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* CYBERPANK MATRIX GRID EFFECT */
+        .bg-grid-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* PREMIUM GLASS HEADER WITH INTENSE NEON GLOW */
         .nexus-header {
-            background: rgba(8, 12, 30, 0.95);
+            background: rgba(4, 7, 19, 0.85);
             border-bottom: 2px solid var(--neon-purple);
-            padding: 8px 12px;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 65px;
+            height: 70px;
             box-sizing: border-box;
-            box-shadow: 0 4px 25px rgba(168, 85, 247, 0.25);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 5px 30px rgba(181, 95, 230, 0.35), inset 0 1px 10px rgba(255,255,255,0.05);
+            z-index: 10;
         }
 
         .brand-title {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, var(--neon-blue), #ffffff);
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), #ffffff, var(--neon-purple));
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: shineText 4s linear infinite;
+        }
+
+        @keyframes shineText {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
 
         /* ECONOMIC ASSET BADGES */
         .asset-badge-cash {
-            background: rgba(0, 255, 102, 0.08);
+            background: rgba(0, 255, 102, 0.07);
             border: 1.5px solid var(--neon-green);
-            padding: 5px 10px;
-            border-radius: 8px;
+            padding: 6px 14px;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--neon-green);
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+            transition: all 0.3s;
         }
 
         .asset-badge-diamond {
-            background: rgba(0, 229, 255, 0.08);
+            background: rgba(0, 229, 255, 0.07);
             border: 1.5px solid var(--neon-diamond);
-            padding: 5px 10px;
-            border-radius: 8px;
+            padding: 6px 14px;
+            border-radius: 10px;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--neon-diamond);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
             text-shadow: 0 0 5px var(--neon-diamond);
+            transition: all 0.3s;
         }
 
-        .promo-box { display: flex; gap: 4px; }
+        .promo-box { display: flex; gap: 6px; }
         .promo-box input {
-            background: #121730;
+            background: rgba(13, 19, 44, 0.9);
             color: white;
             border: 1px solid var(--panel-border);
-            padding: 6px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            width: 80px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            width: 100px;
             outline: none;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            transition: border 0.3s;
+        }
+        .promo-box input:focus {
+            border-color: var(--neon-purple);
         }
         .btn-promo-ok {
-            background: var(--neon-purple);
+            background: linear-gradient(135deg, var(--neon-purple), #8b5cf6);
             color: white;
             border: none;
-            padding: 6px 10px;
-            font-weight: bold;
-            border-radius: 6px;
+            padding: 8px 14px;
+            font-weight: 800;
+            border-radius: 8px;
             cursor: pointer;
+            box-shadow: 0 0 10px rgba(181, 95, 230, 0.4);
         }
 
         /* CORE WORKSPACE GRID */
         .nexus-workspace {
             flex: 1;
             display: grid;
-            grid-template-columns: 2.6fr 1.4fr;
-            gap: 12px;
-            padding: 12px;
+            grid-template-columns: 2.7fr 1.3fr;
+            gap: 16px;
+            padding: 16px;
             box-sizing: border-box;
-            height: calc(100vh - 65px);
+            height: calc(100vh - 70px);
+            z-index: 2;
         }
 
-        /* LEFT STAGE: AUCTION */
+        /* LEFT STAGE: AUCTION ARENA */
         .auction-stage {
-            background: var(--panel-bg);
+            background: var(--panel-glass);
             border: 1px solid var(--panel-border);
-            border-radius: 16px;
-            padding: 12px;
+            border-radius: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             backdrop-filter: blur(15px);
             position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.05);
         }
 
         /* INTERCHANGEABLE MODE BADGE */
         .mode-indicator {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            background: #111;
+            top: 24px;
+            left: 24px;
+            background: rgba(3, 5, 12, 0.9);
             border: 1px solid var(--neon-blue);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             z-index: 5;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
-        /* CANVAS VIEWPORT CONTAINER */
+        /* CANVAS VIEWPORT CONTAINER WITH SCI-FI ALIGNMENT LINES */
         .viewport-container {
             width: 100%;
-            height: 48%;
-            background: radial-gradient(circle, #0e142c 0%, #050710 100%);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 240, 255, 0.15);
+            height: 52%;
+            background: radial-gradient(circle, #0f173a 0%, #040713 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        .viewport-container::before {
+            content: 'NEXUS VISUAL VECTOR SYSTEM v4.02';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-family: monospace;
+            font-size: 9px;
+            color: rgba(0, 240, 255, 0.3);
+            letter-spacing: 1px;
         }
 
         canvas {
@@ -169,71 +233,92 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 5px 0;
+            margin: 8px 0;
+            padding: 0 4px;
         }
 
-        .car-details-block h2 { margin: 0; font-size: 20px; font-weight: 900; }
+        .car-details-block h2 { margin: 0; font-size: 24px; font-weight: 900; letter-spacing: 0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .tier-tag {
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            margin-top: 4px;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
         }
 
-        .countdown-display { background: var(--neon-red); color: white; padding: 4px 12px; border-radius: 20px; font-weight: 900; font-size: 13px; }
-        .live-price-tag { font-size: 26px; font-weight: 900; margin-top: 2px; }
+        .countdown-display { 
+            background: linear-gradient(135deg, var(--neon-red), #dc2626); 
+            color: white; 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            font-weight: 900; 
+            font-size: 14px;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+            letter-spacing: 0.5px;
+        }
+        
+        .live-price-tag { font-size: 32px; font-weight: 900; margin-top: 4px; font-family: monospace; text-shadow: 0 0 10px rgba(0, 255, 102, 0.2); }
 
         .terminal-log-box {
-            height: 70px;
-            background: #050811;
-            border-radius: 10px;
-            padding: 8px;
+            height: 80px;
+            background: rgba(3, 5, 13, 0.9);
+            border-radius: 12px;
+            padding: 10px;
             overflow-y: auto;
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
             font-size: 12px;
-            border: 1px solid rgba(255,255,255,0.02);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.7);
         }
-        .feed-item { padding: 2px 0; }
+        .feed-item { padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.01); }
 
-        /* ADVANCED TACTILE BUTTON FOR SMARTPHONES */
+        /* ADVANCED TACTILE BUTTON FOR SMARTPHONES & PC */
         .btn-nexus-core-bid {
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
             color: white;
             border: none;
-            padding: 16px;
-            font-size: 16px;
+            padding: 18px;
+            font-size: 18px;
             font-weight: 900;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
             text-transform: uppercase;
             width: 100%;
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
-            letter-spacing: 1px;
-            transition: transform 0.05s;
+            box-shadow: 0 6px 25px rgba(0, 240, 255, 0.4);
+            letter-spacing: 1.5px;
+            transition: all 0.1s ease;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
-        .btn-nexus-core-bid:active { transform: scale(0.96); }
+        .btn-nexus-core-bid:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 8px 30px rgba(181, 95, 230, 0.5);
+        }
+        .btn-nexus-core-bid:active { transform: scale(0.97); box-shadow: 0 2px 10px rgba(0, 240, 255, 0.2); }
 
-        /* RIGHT SIDE: GARAGE SYSTEM */
+        /* RIGHT SIDE: GARAGE VAULT */
         .sidebar-garage {
-            background: var(--panel-bg);
+            background: var(--panel-glass);
             border: 1px solid var(--panel-border);
-            border-radius: 16px;
-            padding: 12px;
+            border-radius: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         .garage-title-text {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 900;
             text-transform: uppercase;
-            border-left: 3px solid var(--neon-purple);
-            padding-left: 6px;
-            margin-bottom: 12px;
+            border-left: 4px solid var(--neon-purple);
+            padding-left: 8px;
+            margin-bottom: 16px;
             color: #d8b4fe;
+            letter-spacing: 1px;
         }
 
         .garage-vault-list {
@@ -241,48 +326,60 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .garage-item-node {
-            background: rgba(22, 28, 58, 0.7);
-            border: 1px solid rgba(255,255,255,0.03);
-            padding: 10px;
-            border-radius: 10px;
+            background: rgba(18, 24, 53, 0.7);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            padding: 12px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: border 0.3s;
+        }
+        .garage-item-node:hover {
+            border-color: var(--neon-purple);
         }
 
         .btn-sell-asset {
-            background: var(--neon-green);
-            color: #000;
+            background: linear-gradient(135deg, var(--neon-green), #059669);
+            color: #010603;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 14px;
             font-weight: 900;
-            font-size: 11px;
-            border-radius: 6px;
+            font-size: 12px;
+            border-radius: 8px;
             cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 255, 102, 0.2);
+            transition: all 0.2s;
         }
+        .btn-sell-asset:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
+        /* RESPONSIVE UPRAVLENIYA FOR PHONES */
         @media (max-width: 768px) {
             body { overflow-y: auto; height: auto; }
-            .nexus-workspace { grid-template-columns: 1fr; grid-template-rows: auto auto; height: auto; }
-            .viewport-container { height: 185px; }
-            .brand-title { font-size: 15px; }
-            .btn-nexus-core-bid { padding: 18px; font-size: 17px; }
+            .nexus-workspace { grid-template-columns: 1fr; grid-template-rows: auto auto; height: auto; gap: 12px; padding: 12px; }
+            .viewport-container { height: 190px; }
+            .brand-title { font-size: 17px; }
+            .btn-nexus-core-bid { padding: 20px; font-size: 18px; }
+            .nexus-header { padding: 0 12px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="bg-grid-overlay"></div>
 
     <div class="nexus-header">
         <div class="brand-title">NEXUS PREMIUM</div>
         
         <div class="header-controls">
             <div class="promo-box">
-                <input type="text" id="promo-field-node" placeholder="Promo...">
-                <button class="btn-promo-ok" onclick="claimPromoToken()">OK</button>
+                <input type="text" id="promo-field-node" placeholder="ПРОМОКОД...">
+                <button class="btn-promo-ok" onclick="claimPromoToken()">ОК</button>
             </div>
             <div class="asset-badge-diamond">💎 <span id="txt-diamonds">0</span></div>
             <div class="asset-badge-cash">💵 $<span id="txt-bankroll">150</span></div>
@@ -292,16 +389,16 @@
     <div class="nexus-workspace">
         
         <div class="auction-stage">
-            <div class="mode-indicator" id="lbl-mode-state" style="color:var(--neon-blue); border-color:var(--neon-blue)">Standart Mode</div>
+            <div class="mode-indicator" id="lbl-mode-state">Standart Mode</div>
             
             <div class="viewport-container">
-                <canvas id="carCanvas" width="400" height="180"></canvas>
+                <canvas id="carCanvas" width="450" height="200"></canvas>
             </div>
 
             <div class="metrics-row">
                 <div class="car-details-block">
                     <h2 id="txt-car-name">Loading Live Asset...</h2>
-                    <div class="tier-tag" id="lbl-tier-tag" style="background:rgba(0,240,255,0.1); color:var(--neon-blue); border:1px solid var(--neon-blue);">Standart</div>
+                    <div class="tier-tag" id="lbl-tier-tag">Standart Asset</div>
                 </div>
                 <div class="live-stats-block" style="text-align: right;">
                     <span id="txt-timer" class="countdown-display">4.0s</span>
@@ -323,28 +420,28 @@
     </div>
 
     <script>
-        // DUNYODAGI ENG ZOR 12 TA PREMIUM GIPIERKARLARI BAZASI ($34,000 dan $6,000,000 gacha)
+        // DUNYODAGI ENG KUCHLI PREMIUM GIPIERKARLAR ($34,000 dan $6,000,000 gacha)
         const premiumRegistry = [
-            { name: "Pagani Utopia Roadster (2026)", base: 34000, max: 95000, margin: 1000, color: "#e2e8f0", type: "sport" },
-            { name: "Ferrari SF90 Stradale (2024)", base: 120000, max: 390000, margin: 1500, color: "#ef4444", type: "sport" },
-            { name: "Lamborghini Revuelto (2025)", base: 250000, max: 620000, margin: 2000, color: "#f59e0b", type: "sport" },
-            { name: "McLaren P1 Carbon Edition", base: 450000, max: 980000, margin: 2500, color: "#3b82f6", type: "sport" },
+            { name: "Pagani Utopia Roadster (2026)", base: 34000, max: 95000, margin: 1000, color: "#cbd5e1", type: "sport" },
+            { name: "Ferrari SF90 Stradale (2024)", base: 120000, max: 390000, margin: 1500, color: "#ff2a2a", type: "sport" },
+            { name: "Lamborghini Revuelto (2025)", base: 250000, max: 620000, margin: 2000, color: "#ff9f00", type: "sport" },
+            { name: "McLaren P1 Carbon Edition", base: 450000, max: 980000, margin: 2500, color: "#0070f3", type: "sport" },
             { name: "Porsche 918 Spyder Hybrid", base: 600000, max: 1300000, margin: 3000, color: "#10b981", type: "sport" },
             { name: "Koenigsegg Jesko Absolut", base: 950000, max: 2400000, margin: 4000, color: "#6366f1", type: "sport" },
-            { name: "Bugatti Chiron Super Sport", base: 1500000, max: 3800000, margin: 4500, color: "#ec4899", type: "sport" },
-            { name: "Bugatti Tourbillon V16 (2026)", base: 2100000, max: 4600000, margin: 5000, color: "#06b6d4", type: "sport" },
+            { name: "Bugatti Chiron Super Sport", base: 1500000, max: 3800000, margin: 4500, color: "#ff007f", type: "sport" },
+            { name: "Bugatti Tourbillon V16 (2026)", base: 2100000, max: 4600000, margin: 5000, color: "#00f0ff", type: "sport" },
             { name: "Pagani Huayra Codalunga", base: 2800000, max: 5100000, margin: 5000, color: "#14b8a6", type: "sport" },
             { name: "Lamborghini Veneno Roadster", base: 3200000, max: 5400000, margin: 5000, color: "#f43f5e", type: "sport" },
-            { name: "Bugatti La Voiture Noire", base: 4000000, max: 5800000, margin: 5000, color: "#111827", type: "sport" },
+            { name: "Bugatti La Voiture Noire", base: 4000000, max: 5800000, margin: 5000, color: "#1e293b", type: "sport" },
             { name: "Rolls-Royce Droptail Amethyst", base: 4500000, max: 6000000, margin: 5000, color: "#a855f7", type: "sedan" }
         ];
 
         const standartRegistry = [
             { name: "Chevrolet Spark (2012)", base: 65, max: 155, margin: 30, color: "#06b6d4", type: "sedan" },
-            { name: "Chevrolet Cobalt (2021)", base: 95, max: 220, margin: 45, color: "#6366f1", type: "sedan" },
+            { name: "Chevrolet Cobalt (2021)", base: 95, max: 220, margin: 45, color: "#4f46e5", type: "sedan" },
             { name: "Hyundai Elantra (2023)", base: 145, max: 310, margin: 60, color: "#ec4899", type: "sedan" },
             { name: "Kia Optima K5 (2022)", base: 185, max: 395, margin: 80, color: "#f43f5e", type: "sedan" },
-            { name: "Toyota Camry V70 (2021)", base: 230, max: 460, margin: 110, color: "#14b8a6", type: "sedan" },
+            { name: "Toyota Camry V70 (2021)", base: 230, max: 460, margin: 110, color: "#0f766e", type: "sedan" },
             { name: "BYD Song Plus EV (2024)", base: 290, max: 590, margin: 150, color: "#10b981", type: "suv" },
             { name: "Kia Sportage Turbo (2025)", base: 450, max: 1150, margin: 250, color: "#f59e0b", type: "suv" },
             { name: "Kia Sportage GT-Line (2026)", base: 520, max: 1390, margin: 300, color: "#ef4444", type: "suv" }
@@ -352,7 +449,7 @@
 
         const virtualOpponents = ["Alpha_Broker", "Cyber_Whale", "Dubai_Diler", "Crypto_King", "Nexus_Sniper"];
 
-        // BRAUZER RUNTIME ENGINE
+        // BRAUZER RUNTIME ENGINE Progress saqlash tizimi
         let cashBalance = parseFloat(localStorage.getItem('nx_cash_v2')) || 150;
         let diamondBalance = parseInt(localStorage.getItem('nx_diamonds_v2')) || 0;
         let uniqueClaimedPromos = JSON.parse(localStorage.getItem('nx_promos_v2')) || [];
@@ -383,7 +480,7 @@
             }
         }
 
-        // CANVAS MOSHINA CHIZISH TIZIMI
+        // ULTRA HD HD VECTOR VECHICLE DRAW ENGINE (MOSHINA GRAFIKASI)
         function drawVectorCar(color, type) {
             const canvas = document.getElementById('carCanvas');
             if (!canvas) return;
@@ -391,91 +488,113 @@
             
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            ctx.shadowBlur = 20;
+            // 1. UNDERGLOW NEON LIGHTEFFECT (Pastdagi Neon Chiroq)
+            ctx.shadowBlur = 30;
             ctx.shadowColor = color;
             ctx.fillStyle = color;
+            ctx.fillRect(100, 132, 220, 6);
+
+            // 2. MAIN BODY SHADOW GLOW (Korpusi)
+            ctx.shadowBlur = 25;
+            ctx.shadowColor = color;
             ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 2.5;
 
             ctx.beginPath();
             if (type === "sport") {
-                ctx.moveTo(60, 110);
-                ctx.lineTo(90, 85);
-                ctx.lineTo(170, 75);
-                ctx.lineTo(260, 75);
-                ctx.lineTo(310, 95);
-                ctx.lineTo(350, 110);
-                ctx.lineTo(340, 125);
-                ctx.lineTo(50, 125);
-            } else if (type === "suv") {
-                ctx.moveTo(50, 120);
-                ctx.lineTo(55, 80);
-                ctx.lineTo(130, 65);
-                ctx.lineTo(240, 65);
-                ctx.lineTo(290, 85);
-                ctx.lineTo(345, 90);
-                ctx.lineTo(350, 120);
-                ctx.lineTo(50, 120);
-            } else {
+                // Giperkar Aerodinamik korpusi
                 ctx.moveTo(50, 115);
-                ctx.lineTo(75, 90);
-                ctx.lineTo(140, 75);
-                ctx.lineTo(250, 75);
-                ctx.lineTo(295, 95);
-                ctx.lineTo(345, 100);
-                ctx.lineTo(345, 115);
-                ctx.lineTo(50, 115);
+                ctx.lineTo(85, 88); 
+                ctx.lineTo(160, 72); 
+                ctx.lineTo(255, 72); 
+                ctx.lineTo(315, 92); 
+                ctx.lineTo(370, 106); // Old kapot buruni
+                ctx.lineTo(380, 116);
+                ctx.lineTo(370, 126);
+                ctx.lineTo(45, 126);
+                // Spoiler (Orqa qanot)
+                ctx.moveTo(48, 112); ctx.lineTo(40, 95); ctx.lineTo(60, 95);
+            } else if (type === "suv") {
+                // Jip / Krossover korpusi
+                ctx.moveTo(45, 122);
+                ctx.lineTo(48, 76);
+                ctx.lineTo(120, 60);
+                ctx.lineTo(250, 60);
+                ctx.lineTo(305, 84);
+                ctx.lineTo(370, 90);
+                ctx.lineTo(375, 122);
+                ctx.lineTo(45, 122);
+            } else {
+                // Zamonvayi Sedan korpusi
+                ctx.moveTo(45, 118);
+                ctx.lineTo(70, 88);
+                ctx.lineTo(135, 70);
+                ctx.lineTo(265, 70);
+                ctx.lineTo(315, 94);
+                ctx.lineTo(370, 100);
+                ctx.lineTo(370, 118);
+                ctx.lineTo(45, 118);
             }
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
 
+            // 3. CYBER WINDOWS (Kiber To'q Shaffof Oynalar)
             ctx.shadowBlur = 0;
-            ctx.fillStyle = "#0c112b";
+            ctx.fillStyle = "#070b1e";
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1;
             ctx.beginPath();
             if (type === "sport") {
-                ctx.moveTo(140, 82);
-                ctx.lineTo(220, 82);
-                ctx.lineTo(250, 95);
-                ctx.lineTo(120, 95);
+                ctx.moveTo(135, 78);
+                ctx.lineTo(225, 78);
+                ctx.lineTo(255, 94);
+                ctx.lineTo(115, 94);
             } else if (type === "suv") {
-                ctx.moveTo(125, 73);
-                ctx.lineTo(235, 73);
-                ctx.lineTo(255, 92);
-                ctx.lineTo(110, 92);
+                ctx.moveTo(115, 68);
+                ctx.lineTo(245, 68);
+                ctx.lineTo(270, 90);
+                ctx.lineTo(100, 90);
             } else {
-                ctx.moveTo(130, 82);
-                ctx.lineTo(240, 82);
-                ctx.lineTo(265, 98);
-                ctx.lineTo(115, 98);
+                ctx.moveTo(125, 78);
+                ctx.lineTo(250, 78);
+                ctx.lineTo(275, 96);
+                ctx.lineTo(110, 96);
             }
             ctx.closePath();
             ctx.fill();
+            ctx.stroke();
 
+            // 4. WHEELS WITH CHROME RIMS (G'ildiraklar va Xrom Disklar)
             ctx.shadowBlur = 15;
             ctx.shadowColor = "#ffffff";
-            ctx.fillStyle = "#11162d";
+            ctx.fillStyle = "#090d22";
             ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 4;
 
-            ctx.beginPath();
-            ctx.arc(110, 125, 22, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
+            // Old G'ildirak
+            ctx.beginPath(); ctx.arc(115, 126, 24, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+            // Old ichki disk dizayni
+            ctx.strokeStyle = color; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(115, 126, 12, 0, Math.PI * 2); ctx.stroke();
 
-            ctx.beginPath();
-            ctx.arc(280, 125, 22, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
+            // Orqa G'ildirak
+            ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.arc(295, 126, 24, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+            // Orqa ichki disk dizayni
+            ctx.strokeStyle = color; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(295, 126, 12, 0, Math.PI * 2); ctx.stroke();
             
+            // 5. LASER HEADLIGHTS (Neon Farlar)
+            ctx.shadowBlur = 20;
             ctx.shadowColor = varColor('--neon-blue');
             ctx.strokeStyle = varColor('--neon-blue');
             ctx.lineWidth = 4;
             ctx.beginPath();
             if (type === "sport") {
-                ctx.moveTo(330, 105); ctx.lineTo(348, 110);
+                ctx.moveTo(355, 106); ctx.lineTo(373, 110);
             } else {
-                ctx.moveTo(325, 98); ctx.lineTo(343, 102);
+                ctx.moveTo(350, 100); ctx.lineTo(368, 104);
             }
             ctx.stroke();
         }
@@ -496,18 +615,24 @@
                 modeLbl.innerText = "⭐ Premium Mode Unlocked";
                 modeLbl.style.color = "var(--neon-purple)";
                 modeLbl.style.borderColor = "var(--neon-purple)";
+                modeLbl.style.boxShadow = "0 0 15px rgba(181, 95, 230, 0.4)";
+                
                 tierTag.innerText = "Hypercar / Tier S";
                 tierTag.style.color = "var(--neon-purple)";
                 tierTag.style.borderColor = "var(--neon-purple)";
-                tierTag.style.background = "rgba(168, 85, 247, 0.1)";
+                tierTag.style.background = "rgba(181, 95, 230, 0.15)";
+                tierTag.style.border = "1px solid var(--neon-purple)";
             } else {
                 modeLbl.innerText = "⛓️ Standart Mode (Need 200 💎)";
                 modeLbl.style.color = "var(--neon-blue)";
                 modeLbl.style.borderColor = "var(--neon-blue)";
+                modeLbl.style.boxShadow = "0 0 15px rgba(0, 240, 255, 0.2)";
+                
                 tierTag.innerText = "Standart Asset";
                 tierTag.style.color = "var(--neon-blue)";
                 tierTag.style.borderColor = "var(--neon-blue)";
                 tierTag.style.background = "rgba(0, 240, 255, 0.1)";
+                tierTag.style.border = "1px solid var(--neon-blue)";
             }
 
             if (isAuctionSessionLive) {
@@ -524,7 +649,7 @@
                 node.innerHTML = `
                     <div>
                         <div style="font-weight:900; font-size:13px; color:#fff;">${item.name}</div>
-                        <div style="color:var(--neon-green); font-size:11px; margin-top:2px;">Куплен: $${item.buy.toLocaleString()} ➔ Продажа: $${item.sell.toLocaleString()}</div>
+                        <div style="color:var(--neon-green); font-size:11px; margin-top:3px;">Куплен: $${item.buy.toLocaleString()} ➔ Продажа: $${item.sell.toLocaleString()}</div>
                     </div>
                     <button class="btn-sell-asset" onclick="liquidateAsset(${index})">Продать</button>
                 `;
@@ -557,9 +682,9 @@
             document.getElementById('txt-car-name').innerText = currentAsset.name;
             document.getElementById('txt-price').innerText = "$" + realTimePrice.toLocaleString();
             document.getElementById('txt-timer').innerText = dynamicTimer.toFixed(1) + "s";
-            document.getElementById('txt-timer').style.background = "var(--neon-red)";
+            document.getElementById('txt-timer').style.background = "linear-gradient(135deg, var(--neon-red), #dc2626)";
             
-            document.getElementById('terminal-feed-logs').innerHTML = `<div class="feed-item" style="color:var(--neon-blue)">[SYSTEM]: Торги открыты. Стартовая цена лота: $${realTimePrice.toLocaleString()}</div>`;
+            document.getElementById('terminal-feed-logs').innerHTML = `<div class="feed-item" style="color:var(--neon-blue)">[SYSTEM]: Торги открыты. Начальная стоимость: $${realTimePrice.toLocaleString()}</div>`;
             document.getElementById('btn-master-action').onclick = submitBidAction;
 
             syncVisualInterface();
@@ -585,7 +710,7 @@
             let bidStep = isPremiumUnlockedMode ? 1000 : 10;
 
             if (cashBalance < bidStep) {
-                alert("Недостаточно средств на балансе для этой ставки!");
+                alert("Недостаточно средств на балансе для совершения этой ставки!");
                 return;
             }
 
@@ -631,30 +756,31 @@
         function pushTerminalLog(user, price) {
             const container = document.getElementById('terminal-feed-logs');
             let color = user === "You" ? "var(--neon-green)" : "#fff";
-            container.innerHTML += `<div class="feed-item" style="color:${color}">➔ <b>${user}</b> предложил цену: <b>$${price.toLocaleString()}</b></div>`;
+            container.innerHTML += `<div class="feed-item" style="color:${color}">➔ <b>${user}</b> обновил ставку: <b>$${price.toLocaleString()}</b></div>`;
             container.scrollTop = container.scrollHeight;
         }
 
         function finalizeAuctionSession() {
             isAuctionSessionLive = false;
             clearTimeout(threadAi);
-            document.getElementById('txt-timer').style.background = "#374151";
+            document.getElementById('txt-timer').style.background = "#27272a";
+            document.getElementById('txt-timer').style.boxShadow = "none";
 
             if (auctionLeader === "Player") {
-                alert("🎉 Поздравляем! Лот выигран и доставлен в ваш Гараж.");
+                alert("🎉 Поздравляем! Вы выиграли данный лот. Автомобиль отправлен в ваш личный Гараж.");
                 userVault.push({
                     name: currentAsset.name,
                     buy: realTimePrice,
                     sell: realTimePrice + currentAsset.margin
                 });
             } else if (auctionLeader === "") {
-                alert("Торги закрыты без ставок.");
+                alert("Торги завершены. Ставок не поступило.");
             } else {
                 if (playerBidInvested > 0) {
                     cashBalance += playerBidInvested;
-                    alert(`${auctionLeader} перебил ставку. Ваши средства возвращены на счет.`);
+                    alert(`${auctionLeader} перебил вашу ставку в финале. Ваши инвестиции полностью возвращены.`);
                 } else {
-                    alert(`${auctionLeader} выиграл этот лот.`);
+                    alert(`${auctionLeader} успешно забрал этот лот.`);
                 }
             }
 
@@ -675,13 +801,13 @@
             // MAXIMAL SECRET ADMIN PROMO SYSTEM
             if (inputField === "kievka") {
                 if (uniqueClaimedPromos.includes(inputField)) {
-                    alert("Вы уже использовали этот секретный промокод!");
+                    alert("Вы уже активировали данный уникальный код разработчика!");
                     return;
                 }
                 cashBalance += 999999;
                 diamondBalance += 999999;
                 uniqueClaimedPromos.push(inputField);
-                alert("👑 Секретный код создателя активирован! Получено: +$999,999 и +999,999 💎");
+                alert("👑 Секретный чит-код создателя успешно применен! Начислено: +$999,999 и +999,999 💎");
                 document.getElementById('promo-field-node').value = "";
                 evaluatePremiumState();
                 syncVisualInterface();
@@ -693,7 +819,7 @@
                 }
                 diamondBalance += 20;
                 uniqueClaimedPromos.push(inputField);
-                alert("💎 Промокод успешно активирован! Получено: 20 Бриллиантов.");
+                alert("💎 Промокод успешно активирован! Получено: 20 Бриллантов.");
                 document.getElementById('promo-field-node').value = "";
                 evaluatePremiumState();
                 syncVisualInterface();
