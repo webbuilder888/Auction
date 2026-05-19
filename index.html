@@ -144,37 +144,24 @@
             z-index: 5;
         }
 
-        /* 100% VISIBLE CANVAS GRAPHIC RENDERING */
+        /* CANVAS VIEWPORT CONTAINER */
         .viewport-container {
             width: 100%;
             height: 48%;
-            background: radial-gradient(circle, #121936 0%, #060914 100%);
+            background: radial-gradient(circle, #0e142c 0%, #050710 100%);
             border-radius: 12px;
             border: 1px solid rgba(0, 240, 255, 0.15);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
         }
 
-        /* High-fidelity Neon Generated Vehicle Representation */
-        .neon-hypercar-shape {
-            width: 190px;
-            height: 60px;
-            background: currentColor;
-            border-radius: 25px 60px 12px 10px;
-            position: relative;
-            box-shadow: 0 0 35px cubic-bezier(0.1, 1, 0.1, 1);
-            transition: color 0.4s ease;
-        }
-        .neon-hypercar-shape::before, .neon-hypercar-shape::after {
-            content: ''; position: absolute; bottom: -10px; width: 28px; height: 28px; background: #fff; border-radius: 50%; box-shadow: 0 0 12px #fff;
-        }
-        .neon-hypercar-shape::before { left: 20px; }
-        .neon-hypercar-shape::after { right: 25px; }
-        .hyper-window {
-            position: absolute; top: 8px; right: 35px; width: 65px; height: 22px; background: #000; border-radius: 10px 30px 0 0; opacity: 0.8;
+        canvas {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         /* METRICS CONTROLS BAR */
@@ -278,13 +265,12 @@
             cursor: pointer;
         }
 
-        /* AUTOMATIC RESPONSIVE CONTEXT CONVERTER (TELEFONLAR UCHUN UPRAVLENIYA) */
         @media (max-width: 768px) {
             body { overflow-y: auto; height: auto; }
             .nexus-workspace { grid-template-columns: 1fr; grid-template-rows: auto auto; height: auto; }
             .viewport-container { height: 185px; }
             .brand-title { font-size: 15px; }
-            .btn-nexus-core-bid { padding: 18px; font-size: 17px; } /* Kattaroq qulay tugma */
+            .btn-nexus-core-bid { padding: 18px; font-size: 17px; }
         }
     </style>
 </head>
@@ -309,9 +295,7 @@
             <div class="mode-indicator" id="lbl-mode-state" style="color:var(--neon-blue); border-color:var(--neon-blue)">Standart Mode</div>
             
             <div class="viewport-container">
-                <div class="neon-hypercar-shape" id="gfx-vector-body" style="color: var(--neon-blue);">
-                    <div class="hyper-window"></div>
-                </div>
+                <canvas id="carCanvas" width="400" height="180"></canvas>
             </div>
 
             <div class="metrics-row">
@@ -341,29 +325,29 @@
     <script>
         // DUNYODAGI ENG ZOR 12 TA PREMIUM GIPIERKARLARI BAZASI ($34,000 dan $6,000,000 gacha)
         const premiumRegistry = [
-            { name: "Pagani Utopia Roadster (2026)", base: 34000, max: 95000, margin: 1000, color: "#e2e8f0" },
-            { name: "Ferrari SF90 Stradale (2024)", base: 120000, max: 390000, margin: 1500, color: "#ef4444" },
-            { name: "Lamborghini Revuelto (2025)", base: 250000, max: 620000, margin: 2000, color: "#f59e0b" },
-            { name: "McLaren P1 Carbon Edition", base: 450000, max: 980000, margin: 2500, color: "#3b82f6" },
-            { name: "Porsche 91r Spyder Hybrid", base: 600000, max: 1300000, margin: 3000, color: "#10b981" },
-            { name: "Koenigsegg Jesko Absolut", base: 950000, max: 2400000, margin: 4000, color: "#6366f1" },
-            { name: "Bugatti Chiron Super Sport", base: 1500000, max: 3800000, margin: 4500, color: "#ec4899" },
-            { name: "Bugatti Tourbillon V16 (2026)", base: 2100000, max: 4600000, margin: 5000, color: "#06b6d4" },
-            { name: "Pagani Huayra Codalunga", base: 2800000, max: 5100000, margin: 5000, color: "#14b8a6" },
-            { name: "Lamborghini Veneno Roadster", base: 3200000, max: 5400000, margin: 5000, color: "#f43f5e" },
-            { name: "Bugatti La Voiture Noire", base: 4000000, max: 5800000, margin: 5000, color: "#111827" },
-            { name: "Rolls-Royce Droptail Amethyst", base: 4500000, max: 6000000, margin: 5000, color: "#a855f7" }
+            { name: "Pagani Utopia Roadster (2026)", base: 34000, max: 95000, margin: 1000, color: "#e2e8f0", type: "sport" },
+            { name: "Ferrari SF90 Stradale (2024)", base: 120000, max: 390000, margin: 1500, color: "#ef4444", type: "sport" },
+            { name: "Lamborghini Revuelto (2025)", base: 250000, max: 620000, margin: 2000, color: "#f59e0b", type: "sport" },
+            { name: "McLaren P1 Carbon Edition", base: 450000, max: 980000, margin: 2500, color: "#3b82f6", type: "sport" },
+            { name: "Porsche 918 Spyder Hybrid", base: 600000, max: 1300000, margin: 3000, color: "#10b981", type: "sport" },
+            { name: "Koenigsegg Jesko Absolut", base: 950000, max: 2400000, margin: 4000, color: "#6366f1", type: "sport" },
+            { name: "Bugatti Chiron Super Sport", base: 1500000, max: 3800000, margin: 4500, color: "#ec4899", type: "sport" },
+            { name: "Bugatti Tourbillon V16 (2026)", base: 2100000, max: 4600000, margin: 5000, color: "#06b6d4", type: "sport" },
+            { name: "Pagani Huayra Codalunga", base: 2800000, max: 5100000, margin: 5000, color: "#14b8a6", type: "sport" },
+            { name: "Lamborghini Veneno Roadster", base: 3200000, max: 5400000, margin: 5000, color: "#f43f5e", type: "sport" },
+            { name: "Bugatti La Voiture Noire", base: 4000000, max: 5800000, margin: 5000, color: "#111827", type: "sport" },
+            { name: "Rolls-Royce Droptail Amethyst", base: 4500000, max: 6000000, margin: 5000, color: "#a855f7", type: "sedan" }
         ];
 
         const standartRegistry = [
-            { name: "Chevrolet Spark (2012)", base: 65, max: 155, margin: 30, color: "#06b6d4" },
-            { name: "Chevrolet Cobalt (2021)", base: 95, max: 220, margin: 45, color: "#6366f1" },
-            { name: "Hyundai Elantra (2023)", base: 145, max: 310, margin: 60, color: "#ec4899" },
-            { name: "Kia Optima K5 (2022)", base: 185, max: 395, margin: 80, color: "#f43f5e" },
-            { name: "Toyota Camry V70 (2021)", base: 230, max: 460, margin: 110, color: "#14b8a6" },
-            { name: "BYD Song Plus EV (2024)", base: 290, max: 590, margin: 150, color: "#10b981" },
-            { name: "Kia Sportage Turbo (2025)", base: 450, max: 1150, margin: 250, color: "#f59e0b" },
-            { name: "Kia Sportage GT-Line (2026)", base: 520, max: 1390, margin: 300, color: "#ef4444" }
+            { name: "Chevrolet Spark (2012)", base: 65, max: 155, margin: 30, color: "#06b6d4", type: "sedan" },
+            { name: "Chevrolet Cobalt (2021)", base: 95, max: 220, margin: 45, color: "#6366f1", type: "sedan" },
+            { name: "Hyundai Elantra (2023)", base: 145, max: 310, margin: 60, color: "#ec4899", type: "sedan" },
+            { name: "Kia Optima K5 (2022)", base: 185, max: 395, margin: 80, color: "#f43f5e", type: "sedan" },
+            { name: "Toyota Camry V70 (2021)", base: 230, max: 460, margin: 110, color: "#14b8a6", type: "sedan" },
+            { name: "BYD Song Plus EV (2024)", base: 290, max: 590, margin: 150, color: "#10b981", type: "suv" },
+            { name: "Kia Sportage Turbo (2025)", base: 450, max: 1150, margin: 250, color: "#f59e0b", type: "suv" },
+            { name: "Kia Sportage GT-Line (2026)", base: 520, max: 1390, margin: 300, color: "#ef4444", type: "suv" }
         ];
 
         const virtualOpponents = ["Alpha_Broker", "Cyber_Whale", "Dubai_Diler", "Crypto_King", "Nexus_Sniper"];
@@ -383,7 +367,7 @@
         let threadClock = null;
         let threadAi = null;
         let isAuctionSessionLive = true;
-        let isPremiumUnlockedMode = false; // 200 briliant yig'ilganda true bo'ladi
+        let isPremiumUnlockedMode = false;
 
         function initNexusSystem() {
             evaluatePremiumState();
@@ -392,7 +376,6 @@
         }
 
         function evaluatePremiumState() {
-            // 200 ta briliant yig'ilgan bo'lsa avtomatik Premium rejim yoqiladi
             if (diamondBalance >= 200) {
                 isPremiumUnlockedMode = true;
             } else {
@@ -400,12 +383,122 @@
             }
         }
 
+        // KAFOLATLANGAN YANGI CANVAS MOSHINA CHIZISH TIZIMI
+        function drawVectorCar(color, type) {
+            const canvas = document.getElementById('carCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            // Tozalash
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Soyasi (Neon effekt)
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = color;
+            ctx.fillStyle = color;
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            if (type === "sport") {
+                // Past profilli giperkar (Bugatti, Lamborghini)
+                ctx.moveTo(60, 110);
+                ctx.lineTo(90, 85);
+                ctx.lineTo(170, 75);
+                ctx.lineTo(260, 75);
+                ctx.lineTo(310, 95);
+                ctx.lineTo(350, 110);
+                ctx.lineTo(340, 125);
+                ctx.lineTo(50, 125);
+            } else if (type === "suv") {
+                // Balandroq jip (Kia Sportage)
+                ctx.moveTo(50, 120);
+                ctx.lineTo(55, 80);
+                ctx.lineTo(130, 65);
+                ctx.lineTo(240, 65);
+                ctx.lineTo(290, 85);
+                ctx.lineTo(345, 90);
+                ctx.lineTo(350, 120);
+                ctx.lineTo(50, 120);
+            } else {
+                // Klassik sedan (Camry, Cobalt)
+                ctx.moveTo(50, 115);
+                ctx.lineTo(75, 90);
+                ctx.lineTo(140, 75);
+                ctx.lineTo(250, 75);
+                ctx.lineTo(295, 95);
+                ctx.lineTo(345, 100);
+                ctx.lineTo(345, 115);
+                ctx.lineTo(50, 115);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Oynalar (Qora kiber oyna)
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = "#0c112b";
+            ctx.beginPath();
+            if (type === "sport") {
+                ctx.moveTo(140, 82);
+                ctx.lineTo(220, 82);
+                ctx.lineTo(250, 95);
+                ctx.lineTo(120, 95);
+            } else if (type === "suv") {
+                ctx.moveTo(125, 73);
+                ctx.lineTo(235, 73);
+                ctx.lineTo(255, 92);
+                ctx.lineTo(110, 92);
+            } else {
+                ctx.moveTo(130, 82);
+                ctx.lineTo(240, 82);
+                ctx.lineTo(265, 98);
+                ctx.lineTo(115, 98);
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            // G'ildiraklar (Oq yorqin disklar)
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#ffffff";
+            ctx.fillStyle = "#11162d";
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 3;
+
+            // Old g'ildirak
+            ctx.beginPath();
+            ctx.arc(110, 125, 22, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Orqa g'ildirak
+            ctx.beginPath();
+            ctx.arc(280, 125, 22, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            
+            // Fara (Yorqin neon chiziq)
+            ctx.shadowColor = varColor('--neon-blue');
+            ctx.strokeStyle = varColor('--neon-blue');
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            if (type === "sport") {
+                ctx.moveTo(330, 105); ctx.lineTo(348, 110);
+            } else {
+                ctx.moveTo(325, 98); ctx.lineTo(343, 102);
+            }
+            ctx.stroke();
+        }
+
+        function varColor(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
         function syncVisualInterface() {
             document.getElementById('txt-bankroll').innerText = Math.floor(cashBalance);
             document.getElementById('txt-diamonds').innerText = diamondBalance;
             document.getElementById('lbl-garage-heading').innerText = `Мой Гараж (${userVault.length})`;
 
-            // Premium yoki Standart rejim sarlavhalarini yangilash
             const modeLbl = document.getElementById('lbl-mode-state');
             const tierTag = document.getElementById('lbl-tier-tag');
             
@@ -433,7 +526,6 @@
                 document.getElementById('btn-master-action').innerText = "Следующий Лот ➔";
             }
 
-            // Sync Garage Node Cards
             const container = document.getElementById('garage-vault-container');
             container.innerHTML = "";
             userVault.forEach((item, index) => {
@@ -442,14 +534,13 @@
                 node.innerHTML = `
                     <div>
                         <div style="font-weight:900; font-size:13px; color:#fff;">${item.name}</div>
-                        <div style="color:var(--neon-green); font-size:11px; margin-top:2px;">Куплен: $${item.buy} ➔ Продажа: $${item.sell}</div>
+                        <div style="color:var(--neon-green); font-size:11px; margin-top:2px;">Куплен: $${item.buy.toLocaleString()} ➔ Продажа: $${item.sell.toLocaleString()}</div>
                     </div>
                     <button class="btn-sell-asset" onclick="liquidateAsset(${index})">Продать</button>
                 `;
                 container.appendChild(node);
             });
 
-            // Save Progress
             localStorage.setItem('nx_cash_v2', cashBalance);
             localStorage.setItem('nx_diamonds_v2', diamondBalance);
             localStorage.setItem('nx_promos_v2', JSON.stringify(uniqueClaimedPromos));
@@ -462,7 +553,6 @@
 
             evaluatePremiumState();
 
-            // Rejimga qarab mos moshinalarni tanlash
             const activeRegistry = isPremiumUnlockedMode ? premiumRegistry : standartRegistry;
             currentAsset = activeRegistry[Math.floor(Math.random() * activeRegistry.length)];
             
@@ -472,7 +562,9 @@
             dynamicTimer = 4.0;
             isAuctionSessionLive = true;
 
-            document.getElementById('gfx-vector-body').style.color = currentAsset.color;
+            // CANVAS CHIZISH INTEGRATSIYASI
+            drawVectorCar(currentAsset.color, currentAsset.type);
+
             document.getElementById('txt-car-name').innerText = currentAsset.name;
             document.getElementById('txt-price').innerText = "$" + realTimePrice.toLocaleString();
             document.getElementById('txt-timer').innerText = dynamicTimer.toFixed(1) + "s";
@@ -501,7 +593,6 @@
         function submitBidAction() {
             if (!isAuctionSessionLive) return;
 
-            // Premiumda stavka qadami $1000, standartda $10
             let bidStep = isPremiumUnlockedMode ? 1000 : 10;
 
             if (cashBalance < bidStep) {
@@ -513,7 +604,7 @@
             playerBidInvested += bidStep;
             realTimePrice += bidStep;
             auctionLeader = "Player";
-            dynamicTimer = 4.0; // Reset
+            dynamicTimer = 4.0;
 
             pushTerminalLog("You", realTimePrice);
             document.getElementById('txt-price').innerText = "$" + realTimePrice.toLocaleString();
@@ -562,7 +653,6 @@
 
             if (auctionLeader === "Player") {
                 alert("🎉 Поздравляем! Лот выигран и доставлен в ваш Гараж.");
-                // Mashina sotilganda ustiga aytilgan foyda aniq qo'shiladi
                 userVault.push({
                     name: currentAsset.name,
                     buy: realTimePrice,
@@ -572,7 +662,7 @@
                 alert("Торги закрыты без ставок.");
             } else {
                 if (playerBidInvested > 0) {
-                    cashBalance += playerBidInvested; // Pullar kuyib ketmaydi, qaytadi
+                    cashBalance += playerBidInvested;
                     alert(`${auctionLeader} перебил ставку. Ваши средства возвращены на счет.`);
                 } else {
                     alert(`${auctionLeader} выиграл этот лот.`);
@@ -599,7 +689,6 @@
                     return;
                 }
                 
-                // Faqat 20 ta brilliant beradi va ro'yxatga muhrlanadi
                 diamondBalance += 20;
                 uniqueClaimedPromos.push(inputField);
                 alert("💎 Промокод успешно активирован! Получено: 20 Бриллиантов.");
@@ -608,7 +697,6 @@
                 evaluatePremiumState();
                 syncVisualInterface();
             } else if (inputField === "seevent2026" || inputField === "welecet200") {
-                // Eski pullik promokodlar buzilmasdan saqlab qolindi
                 if (uniqueClaimedPromos.includes(inputField)) {
                     alert("Этот код уже был активирован!");
                     return;
