@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEXUS AUCTION — Maintenance</title>
+    <title>NEXUS AUCTION — Premium Edition</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #050814 0%, #0c102b 100%);
+            --bg-gradient: linear-gradient(135deg, #040612 0%, #0b0e26 100%);
+            --panel-bg: rgba(15, 20, 45, 0.8);
+            --panel-border: rgba(0, 240, 255, 0.15);
             --neon-blue: #00f0ff;
-            --neon-purple: #a855f7;
+            --neon-green: #00ff66;
             --neon-red: #ff3366;
+            --neon-purple: #a855f7;
+            --neon-diamond: #00e5ff;
             --text-white: #ffffff;
         }
 
@@ -20,169 +24,607 @@
             color: var(--text-white);
             font-family: 'Segoe UI', Roboto, sans-serif;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
-            -webkit-user-select: none;
-            user-select: none;
+            display: flex;
+            flex-direction: column;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* CENTER CONTAINER WITH NEON SHADOW */
-        .maintenance-box {
-            background: rgba(16, 22, 47, 0.85);
-            border: 2px solid var(--neon-purple);
-            box-shadow: 0 0 35px rgba(168, 85, 247, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
+        /* PREMIUM GLASS HEADER */
+        .nexus-header {
+            background: rgba(8, 12, 30, 0.95);
+            border-bottom: 2px solid var(--neon-purple);
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
             box-sizing: border-box;
-            backdrop-filter: blur(12px);
-            animation: pulseGlow 3s infinite alternate;
+            box-shadow: 0 4px 25px rgba(168, 85, 247, 0.25);
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.3); }
-            100% { box-shadow: 0 0 45px rgba(0, 240, 255, 0.5); }
-        }
-
-        .logo {
-            font-size: 28px;
+        .brand-title {
+            font-size: 18px;
             font-weight: 900;
-            letter-spacing: 3px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            text-transform: uppercase;
         }
 
-        .status-badge {
-            display: inline-block;
-            background: rgba(255, 51, 102, 0.15);
-            border: 1px solid var(--neon-red);
-            color: var(--neon-red);
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 12px;
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ECONOMIC ASSET BADGES */
+        .asset-badge-cash {
+            background: rgba(0, 255, 102, 0.08);
+            border: 1.5px solid var(--neon-green);
+            padding: 5px 10px;
+            border-radius: 8px;
             font-weight: 800;
+            font-size: 14px;
+            color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
+        }
+
+        .asset-badge-diamond {
+            background: rgba(0, 229, 255, 0.08);
+            border: 1.5px solid var(--neon-diamond);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            color: var(--neon-diamond);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+            text-shadow: 0 0 5px var(--neon-diamond);
+        }
+
+        .promo-box { display: flex; gap: 4px; }
+        .promo-box input {
+            background: #121730;
+            color: white;
+            border: 1px solid var(--panel-border);
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            width: 80px;
+            outline: none;
+        }
+        .btn-promo-ok {
+            background: var(--neon-purple);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* CORE WORKSPACE GRID */
+        .nexus-workspace {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 2.6fr 1.4fr;
+            gap: 12px;
+            padding: 12px;
+            box-sizing: border-box;
+            height: calc(100vh - 65px);
+        }
+
+        /* LEFT STAGE: AUCTION */
+        .auction-stage {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(15px);
+            position: relative;
+        }
+
+        /* INTERCHANGEABLE MODE BADGE */
+        .mode-indicator {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #111;
+            border: 1px solid var(--neon-blue);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
+            z-index: 5;
         }
 
-        .message {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #9cb0d8;
-            margin-bottom: 30px;
-        }
-
-        /* COUNTDOWN DIGITAL COUNTER */
-        .timer-grid {
+        /* 100% VISIBLE CANVAS GRAPHIC RENDERING */
+        .viewport-container {
+            width: 100%;
+            height: 48%;
+            background: radial-gradient(circle, #121936 0%, #060914 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.15);
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 15px;
+            position: relative;
         }
 
-        .timer-card {
-            background: rgba(10, 15, 36, 0.8);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 10px;
-            padding: 12px 18px;
-            min-width: 70px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        /* High-fidelity Neon Generated Vehicle Representation */
+        .neon-hypercar-shape {
+            width: 190px;
+            height: 60px;
+            background: currentColor;
+            border-radius: 25px 60px 12px 10px;
+            position: relative;
+            box-shadow: 0 0 35px cubic-bezier(0.1, 1, 0.1, 1);
+            transition: color 0.4s ease;
+        }
+        .neon-hypercar-shape::before, .neon-hypercar-shape::after {
+            content: ''; position: absolute; bottom: -10px; width: 28px; height: 28px; background: #fff; border-radius: 50%; box-shadow: 0 0 12px #fff;
+        }
+        .neon-hypercar-shape::before { left: 20px; }
+        .neon-hypercar-shape::after { right: 25px; }
+        .hyper-window {
+            position: absolute; top: 8px; right: 35px; width: 65px; height: 22px; background: #000; border-radius: 10px 30px 0 0; opacity: 0.8;
         }
 
-        .timer-num {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--neon-blue);
-            font-family: monospace;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        /* METRICS CONTROLS BAR */
+        .metrics-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
         }
 
-        .timer-lbl {
+        .car-details-block h2 { margin: 0; font-size: 20px; font-weight: 900; }
+        .tier-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
             font-size: 10px;
+            font-weight: 800;
             text-transform: uppercase;
-            color: #627293;
             margin-top: 4px;
-            letter-spacing: 0.5px;
+        }
+
+        .countdown-display { background: var(--neon-red); color: white; padding: 4px 12px; border-radius: 20px; font-weight: 900; font-size: 13px; }
+        .live-price-tag { font-size: 26px; font-weight: 900; margin-top: 2px; }
+
+        .terminal-log-box {
+            height: 70px;
+            background: #050811;
+            border-radius: 10px;
+            padding: 8px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        .feed-item { padding: 2px 0; }
+
+        /* ADVANCED TACTILE BUTTON FOR SMARTPHONES */
+        .btn-nexus-core-bid {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 900;
+            border-radius: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+            letter-spacing: 1px;
+            transition: transform 0.05s;
+        }
+        .btn-nexus-core-bid:active { transform: scale(0.96); }
+
+        /* RIGHT SIDE: GARAGE SYSTEM */
+        .sidebar-garage {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .garage-title-text {
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-left: 3px solid var(--neon-purple);
+            padding-left: 6px;
+            margin-bottom: 12px;
+            color: #d8b4fe;
+        }
+
+        .garage-vault-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .garage-item-node {
+            background: rgba(22, 28, 58, 0.7);
+            border: 1px solid rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-sell-asset {
+            background: var(--neon-green);
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            font-weight: 900;
+            font-size: 11px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* AUTOMATIC RESPONSIVE CONTEXT CONVERTER (TELEFONLAR UCHUN UPRAVLENIYA) */
+        @media (max-width: 768px) {
+            body { overflow-y: auto; height: auto; }
+            .nexus-workspace { grid-template-columns: 1fr; grid-template-rows: auto auto; height: auto; }
+            .viewport-container { height: 185px; }
+            .brand-title { font-size: 15px; }
+            .btn-nexus-core-bid { padding: 18px; font-size: 17px; } /* Kattaroq qulay tugma */
         }
     </style>
 </head>
 <body>
 
-    <div class="maintenance-box">
-        <div class="logo">NEXUS AUCTION</div>
-        <div class="status-badge">SYSTEM UPDATE</div>
+    <div class="nexus-header">
+        <div class="brand-title">NEXUS PREMIUM</div>
         
-        <div class="message">
-            Игра временно приостановлена разработчиками для внедрения масштабного обновления. <br>
-            <b>Ориентировочное время запуска: через 2 часа 30 минут.</b>
-        </div>
-
-        <div class="timer-grid">
-            <div class="timer-card">
-                <div class="timer-num" id="hr">02</div>
-                <div class="timer-lbl">Часы</div>
+        <div class="header-controls">
+            <div class="promo-box">
+                <input type="text" id="promo-field-node" placeholder="Promo...">
+                <button class="btn-promo-ok" onclick="claimPromoToken()">OK</button>
             </div>
-            <div class="timer-card">
-                <div class="timer-num" id="mn">30</div>
-                <div class="timer-lbl">Мин</div>
-            </div>
-            <div class="timer-card">
-                <div class="timer-num" id="sc">00</div>
-                <div class="timer-lbl">Сек</div>
-            </div>
+            <div class="asset-badge-diamond">💎 <span id="txt-diamonds">0</span></div>
+            <div class="asset-badge-cash">💵 $<span id="txt-bankroll">150</span></div>
         </div>
     </div>
 
-    <script>
-        // VAQTIY REAL VAQTLARNI SAQLASH (SAYTDAN CHIQIB KETSA HAM TO'XTAMAYDI)
-        const durationInMs = (2 * 60 * 60 * 1000) + (30 * 60 * 1000); // 2 soat 30 daqiqa millisekundlarda
-        let targetTime = localStorage.getItem('nexus_maintenance_target');
+    <div class="nexus-workspace">
+        
+        <div class="auction-stage">
+            <div class="mode-indicator" id="lbl-mode-state" style="color:var(--neon-blue); border-color:var(--neon-blue)">Standart Mode</div>
+            
+            <div class="viewport-container">
+                <div class="neon-hypercar-shape" id="gfx-vector-body" style="color: var(--neon-blue);">
+                    <div class="hyper-window"></div>
+                </div>
+            </div>
 
-        if (!targetTime) {
-            // Agar taymer birinchi marta o'rnatilayotgan bo'lsa, hozirgi vaqtga 2.5 soat qo'shamiz
-            targetTime = Date.now() + durationInMs;
-            localStorage.setItem('nexus_maintenance_target', targetTime);
-        } else {
-            targetTime = parseInt(targetTime);
+            <div class="metrics-row">
+                <div class="car-details-block">
+                    <h2 id="txt-car-name">Loading Live Asset...</h2>
+                    <div class="tier-tag" id="lbl-tier-tag" style="background:rgba(0,240,255,0.1); color:var(--neon-blue); border:1px solid var(--neon-blue);">Standart</div>
+                </div>
+                <div class="live-stats-block" style="text-align: right;">
+                    <span id="txt-timer" class="countdown-display">4.0s</span>
+                    <div id="txt-price" class="live-price-tag" style="color: var(--neon-green);">$0</div>
+                </div>
+            </div>
+
+            <div class="terminal-log-box" id="terminal-feed-logs"></div>
+
+            <button class="btn-nexus-core-bid" id="btn-master-action" onclick="submitBidAction()">Повысить ставку (+$10)</button>
+        </div>
+
+        <div class="sidebar-garage">
+            <div class="garage-title-text" id="lbl-garage-heading">Мой Гараж (0)</div>
+            <div class="garage-vault-list" id="garage-vault-container">
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        // DUNYODAGI ENG ZOR 12 TA PREMIUM GIPIERKARLARI BAZASI ($34,000 dan $6,000,000 gacha)
+        const premiumRegistry = [
+            { name: "Pagani Utopia Roadster (2026)", base: 34000, max: 95000, margin: 1000, color: "#e2e8f0" },
+            { name: "Ferrari SF90 Stradale (2024)", base: 120000, max: 390000, margin: 1500, color: "#ef4444" },
+            { name: "Lamborghini Revuelto (2025)", base: 250000, max: 620000, margin: 2000, color: "#f59e0b" },
+            { name: "McLaren P1 Carbon Edition", base: 450000, max: 980000, margin: 2500, color: "#3b82f6" },
+            { name: "Porsche 91r Spyder Hybrid", base: 600000, max: 1300000, margin: 3000, color: "#10b981" },
+            { name: "Koenigsegg Jesko Absolut", base: 950000, max: 2400000, margin: 4000, color: "#6366f1" },
+            { name: "Bugatti Chiron Super Sport", base: 1500000, max: 3800000, margin: 4500, color: "#ec4899" },
+            { name: "Bugatti Tourbillon V16 (2026)", base: 2100000, max: 4600000, margin: 5000, color: "#06b6d4" },
+            { name: "Pagani Huayra Codalunga", base: 2800000, max: 5100000, margin: 5000, color: "#14b8a6" },
+            { name: "Lamborghini Veneno Roadster", base: 3200000, max: 5400000, margin: 5000, color: "#f43f5e" },
+            { name: "Bugatti La Voiture Noire", base: 4000000, max: 5800000, margin: 5000, color: "#111827" },
+            { name: "Rolls-Royce Droptail Amethyst", base: 4500000, max: 6000000, margin: 5000, color: "#a855f7" }
+        ];
+
+        const standartRegistry = [
+            { name: "Chevrolet Spark (2012)", base: 65, max: 155, margin: 30, color: "#06b6d4" },
+            { name: "Chevrolet Cobalt (2021)", base: 95, max: 220, margin: 45, color: "#6366f1" },
+            { name: "Hyundai Elantra (2023)", base: 145, max: 310, margin: 60, color: "#ec4899" },
+            { name: "Kia Optima K5 (2022)", base: 185, max: 395, margin: 80, color: "#f43f5e" },
+            { name: "Toyota Camry V70 (2021)", base: 230, max: 460, margin: 110, color: "#14b8a6" },
+            { name: "BYD Song Plus EV (2024)", base: 290, max: 590, margin: 150, color: "#10b981" },
+            { name: "Kia Sportage Turbo (2025)", base: 450, max: 1150, margin: 250, color: "#f59e0b" },
+            { name: "Kia Sportage GT-Line (2026)", base: 520, max: 1390, margin: 300, color: "#ef4444" }
+        ];
+
+        const virtualOpponents = ["Alpha_Broker", "Cyber_Whale", "Dubai_Diler", "Crypto_King", "Nexus_Sniper"];
+
+        // BRAUZER RUNTIME ENGINE
+        let cashBalance = parseFloat(localStorage.getItem('nx_cash_v2')) || 150;
+        let diamondBalance = parseInt(localStorage.getItem('nx_diamonds_v2')) || 0;
+        let uniqueClaimedPromos = JSON.parse(localStorage.getItem('nx_promos_v2')) || [];
+        let userVault = JSON.parse(localStorage.getItem('nx_vault_v2')) || [];
+
+        let currentAsset = null;
+        let realTimePrice = 0;
+        let auctionLeader = "";
+        let playerBidInvested = 0;
+        let dynamicTimer = 4.0;
+
+        let threadClock = null;
+        let threadAi = null;
+        let isAuctionSessionLive = true;
+        let isPremiumUnlockedMode = false; // 200 briliant yig'ilganda true bo'ladi
+
+        function initNexusSystem() {
+            evaluatePremiumState();
+            syncVisualInterface();
+            launchNewAuctionSession();
         }
 
-        function updateCountdown() {
-            const currentTime = Date.now();
-            const difference = targetTime - currentTime;
+        function evaluatePremiumState() {
+            // 200 ta briliant yig'ilgan bo'lsa avtomatik Premium rejim yoqiladi
+            if (diamondBalance >= 200) {
+                isPremiumUnlockedMode = true;
+            } else {
+                isPremiumUnlockedMode = false;
+            }
+        }
 
-            if (difference <= 0) {
-                // Vaqt tugaganda blokirovka olib tashlanadi va yangi o'yinga ruxsat beriladi
-                localStorage.removeItem('nexus_maintenance_target');
-                document.querySelector('.maintenance-box').innerHTML = `
-                    <div class="logo">NEXUS AUCTION</div>
-                    <div class="status-badge" style="border-color:var(--neon-green); color:var(--neon-green); background:rgba(0,255,102,0.1)">ONLINE</div>
-                    <div class="message">Обновление успешно завершено! Перезагрузите страницу для входа в игру.</div>
+        function syncVisualInterface() {
+            document.getElementById('txt-bankroll').innerText = Math.floor(cashBalance);
+            document.getElementById('txt-diamonds').innerText = diamondBalance;
+            document.getElementById('lbl-garage-heading').innerText = `Мой Гараж (${userVault.length})`;
+
+            // Premium yoki Standart rejim sarlavhalarini yangilash
+            const modeLbl = document.getElementById('lbl-mode-state');
+            const tierTag = document.getElementById('lbl-tier-tag');
+            
+            if (isPremiumUnlockedMode) {
+                modeLbl.innerText = "⭐ Premium Mode Unlocked";
+                modeLbl.style.color = "var(--neon-purple)";
+                modeLbl.style.borderColor = "var(--neon-purple)";
+                tierTag.innerText = "Hypercar / Tier S";
+                tierTag.style.color = "var(--neon-purple)";
+                tierTag.style.borderColor = "var(--neon-purple)";
+                tierTag.style.background = "rgba(168, 85, 247, 0.1)";
+            } else {
+                modeLbl.innerText = "⛓️ Standart Mode (Need 200 💎)";
+                modeLbl.style.color = "var(--neon-blue)";
+                modeLbl.style.borderColor = "var(--neon-blue)";
+                tierTag.innerText = "Standart Asset";
+                tierTag.style.color = "var(--neon-blue)";
+                tierTag.style.borderColor = "var(--neon-blue)";
+                tierTag.style.background = "rgba(0, 240, 255, 0.1)";
+            }
+
+            if (isAuctionSessionLive) {
+                document.getElementById('btn-master-action').innerText = isPremiumUnlockedMode ? "Повысить ставку (+$1000)" : "Повысить ставку (+$10)";
+            } else {
+                document.getElementById('btn-master-action').innerText = "Следующий Лот ➔";
+            }
+
+            // Sync Garage Node Cards
+            const container = document.getElementById('garage-vault-container');
+            container.innerHTML = "";
+            userVault.forEach((item, index) => {
+                const node = document.createElement('div');
+                node.className = "garage-item-node";
+                node.innerHTML = `
+                    <div>
+                        <div style="font-weight:900; font-size:13px; color:#fff;">${item.name}</div>
+                        <div style="color:var(--neon-green); font-size:11px; margin-top:2px;">Куплен: $${item.buy} ➔ Продажа: $${item.sell}</div>
+                    </div>
+                    <button class="btn-sell-asset" onclick="liquidateAsset(${index})">Продать</button>
                 `;
+                container.appendChild(node);
+            });
+
+            // Save Progress
+            localStorage.setItem('nx_cash_v2', cashBalance);
+            localStorage.setItem('nx_diamonds_v2', diamondBalance);
+            localStorage.setItem('nx_promos_v2', JSON.stringify(uniqueClaimedPromos));
+            localStorage.setItem('nx_vault_v2', JSON.stringify(userVault));
+        }
+
+        function launchNewAuctionSession() {
+            clearInterval(threadClock);
+            clearTimeout(threadAi);
+
+            evaluatePremiumState();
+
+            // Rejimga qarab mos moshinalarni tanlash
+            const activeRegistry = isPremiumUnlockedMode ? premiumRegistry : standartRegistry;
+            currentAsset = activeRegistry[Math.floor(Math.random() * activeRegistry.length)];
+            
+            realTimePrice = currentAsset.base;
+            auctionLeader = "";
+            playerBidInvested = 0;
+            dynamicTimer = 4.0;
+            isAuctionSessionLive = true;
+
+            document.getElementById('gfx-vector-body').style.color = currentAsset.color;
+            document.getElementById('txt-car-name').innerText = currentAsset.name;
+            document.getElementById('txt-price').innerText = "$" + realTimePrice.toLocaleString();
+            document.getElementById('txt-timer').innerText = dynamicTimer.toFixed(1) + "s";
+            document.getElementById('txt-timer').style.background = "var(--neon-red)";
+            
+            document.getElementById('terminal-feed-logs').innerHTML = `<div class="feed-item" style="color:var(--neon-blue)">[SYSTEM]: Торги открыты. Стартовая цена лота: $${realTimePrice.toLocaleString()}</div>`;
+            document.getElementById('btn-master-action').onclick = submitBidAction;
+
+            syncVisualInterface();
+            startTimerCountdown();
+            scheduleVirtualAiResponse();
+        }
+
+        function startTimerCountdown() {
+            threadClock = setInterval(() => {
+                dynamicTimer -= 0.1;
+                if (dynamicTimer <= 0) {
+                    dynamicTimer = 0;
+                    clearInterval(threadClock);
+                    finalizeAuctionSession();
+                }
+                document.getElementById('txt-timer').innerText = dynamicTimer.toFixed(1) + "s";
+            }, 100);
+        }
+
+        function submitBidAction() {
+            if (!isAuctionSessionLive) return;
+
+            // Premiumda stavka qadami $1000, standartda $10
+            let bidStep = isPremiumUnlockedMode ? 1000 : 10;
+
+            if (cashBalance < bidStep) {
+                alert("Недостаточно средств на балансе для этой ставки!");
                 return;
             }
 
-            // Matematik hisob-kitoblar (Soat, Daqiqa, Soniya)
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            cashBalance -= bidStep;
+            playerBidInvested += bidStep;
+            realTimePrice += bidStep;
+            auctionLeader = "Player";
+            dynamicTimer = 4.0; // Reset
 
-            // Ekranga chiqarish (Agar 1 xonali bo'lsa oldiga 0 qo'shadi)
-            document.getElementById('hr').innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById('mn').innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById('sc').innerText = seconds < 10 ? "0" + seconds : seconds;
+            pushTerminalLog("You", realTimePrice);
+            document.getElementById('txt-price').innerText = "$" + realTimePrice.toLocaleString();
+            syncVisualInterface();
+
+            clearTimeout(threadAi);
+            scheduleVirtualAiResponse();
         }
 
-        // Har soniyada vaqtni yangilab turish
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        function scheduleVirtualAiResponse() {
+            if (!isAuctionSessionLive) return;
+
+            if (realTimePrice < currentAsset.max) {
+                if (Math.random() > 0.4) {
+                    let adaptiveSpeed = isPremiumUnlockedMode ? (400 + Math.random() * 800) : (700 + Math.random() * 1200);
+                    threadAi = setTimeout(() => {
+                        if (!isAuctionSessionLive) return;
+
+                        let bidStep = isPremiumUnlockedMode ? 1000 : 10;
+                        realTimePrice += bidStep;
+                        
+                        let bot = virtualOpponents[Math.floor(Math.random() * virtualOpponents.length)];
+                        auctionLeader = bot;
+                        dynamicTimer = 4.0;
+
+                        pushTerminalLog(bot, realTimePrice);
+                        document.getElementById('txt-price').innerText = "$" + realTimePrice.toLocaleString();
+
+                        scheduleVirtualAiResponse();
+                    }, adaptiveSpeed);
+                }
+            }
+        }
+
+        function pushTerminalLog(user, price) {
+            const container = document.getElementById('terminal-feed-logs');
+            let color = user === "You" ? "var(--neon-green)" : "#fff";
+            container.innerHTML += `<div class="feed-item" style="color:${color}">➔ <b>${user}</b> предложил цену: <b>$${price.toLocaleString()}</b></div>`;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function finalizeAuctionSession() {
+            isAuctionSessionLive = false;
+            clearTimeout(threadAi);
+            document.getElementById('txt-timer').style.background = "#374151";
+
+            if (auctionLeader === "Player") {
+                alert("🎉 Поздравляем! Лот выигран и доставлен в ваш Гараж.");
+                // Mashina sotilganda ustiga aytilgan foyda aniq qo'shiladi
+                userVault.push({
+                    name: currentAsset.name,
+                    buy: realTimePrice,
+                    sell: realTimePrice + currentAsset.margin
+                });
+            } else if (auctionLeader === "") {
+                alert("Торги закрыты без ставок.");
+            } else {
+                if (playerBidInvested > 0) {
+                    cashBalance += playerBidInvested; // Pullar kuyib ketmaydi, qaytadi
+                    alert(`${auctionLeader} перебил ставку. Ваши средства возвращены на счет.`);
+                } else {
+                    alert(`${auctionLeader} выиграл этот лот.`);
+                }
+            }
+
+            document.getElementById('btn-master-action').innerText = "Следующий Лот ➔";
+            document.getElementById('btn-master-action').onclick = launchNewAuctionSession;
+            syncVisualInterface();
+        }
+
+        function liquidateAsset(index) {
+            cashBalance += userVault[index].sell;
+            userVault.splice(index, 1);
+            syncVisualInterface();
+        }
+
+        function claimPromoToken() {
+            const inputField = document.getElementById('promo-field-node').value.trim();
+            
+            if (inputField === "brilliantv03") {
+                if (uniqueClaimedPromos.includes(inputField)) {
+                    alert("Вы уже использовали этот промокод!");
+                    return;
+                }
+                
+                // Faqat 20 ta brilliant beradi va ro'yxatga muhrlanadi
+                diamondBalance += 20;
+                uniqueClaimedPromos.push(inputField);
+                alert("💎 Промокод успешно активирован! Получено: 20 Бриллиантов.");
+                document.getElementById('promo-field-node').value = "";
+                
+                evaluatePremiumState();
+                syncVisualInterface();
+            } else if (inputField === "seevent2026" || inputField === "welecet200") {
+                // Eski pullik promokodlar buzilmasdan saqlab qolindi
+                if (uniqueClaimedPromos.includes(inputField)) {
+                    alert("Этот код уже был активирован!");
+                    return;
+                }
+                let bonus = inputField === "seevent2026" ? 500 : 800;
+                cashBalance += bonus;
+                uniqueClaimedPromos.push(inputField);
+                alert(`💵 Успешно начислено: +$${bonus}`);
+                document.getElementById('promo-field-node').value = "";
+                syncVisualInterface();
+            } else {
+                alert("Неверный или недействительный промокод.");
+            }
+        }
+
+        window.onload = initNexusSystem;
     </script>
 </body>
 </html>
