@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEXUS AUCTION 2026</title>
+    <title>NEXUS AUCTION — Maintenance</title>
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #050814 0%, #0c102b 100%);
-            --panel-bg: rgba(16, 22, 47, 0.75);
-            --panel-border: rgba(0, 240, 255, 0.15);
             --neon-blue: #00f0ff;
-            --neon-green: #00ff66;
-            --neon-red: #ff3366;
             --neon-purple: #a855f7;
+            --neon-red: #ff3366;
             --text-white: #ffffff;
         }
 
@@ -21,566 +18,171 @@
             padding: 0;
             background: var(--bg-gradient);
             color: var(--text-white);
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             height: 100vh;
-            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* SMARTPHONE & PC OPTIMIZED HEADER */
-        .nexus-header {
-            background: rgba(10, 15, 36, 0.9);
-            border-bottom: 2px solid var(--neon-purple);
-            padding: 8px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 60px;
-            box-sizing: border-box;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
-        }
-
-        .brand-title {
-            font-size: 20px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-        }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .wallet-display {
-            background: rgba(0, 255, 102, 0.1);
-            border: 1.5px solid var(--neon-green);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 15px;
-            color: var(--neon-green);
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
-            white-space: nowrap;
-        }
-
-        select, .promo-input-box input {
-            background: #131a35;
-            color: white;
-            border: 1px solid var(--panel-border);
-            padding: 6px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            outline: none;
-        }
-
-        .promo-input-box { display: flex; gap: 4px; }
-        .btn-apply { 
-            background: var(--neon-purple); 
-            color: white; 
-            border: none; 
-            padding: 6px 10px; 
-            font-weight: bold; 
-            border-radius: 6px; 
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
-        }
-
-        /* RESPONSIVE RESPONSIVE WORKSPACE */
-        .nexus-grid {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 2.5fr 1.5fr;
-            gap: 12px;
-            padding: 12px;
-            box-sizing: border-box;
-            height: calc(100vh - 60px);
-        }
-
-        /* LEFT SIDE: AUCTION ARENA */
-        .auction-arena {
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            border-radius: 16px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            backdrop-filter: blur(10px);
-        }
-
-        /* 100% VISIBLE CYBER DESIGN VEHICLE VIEWPORT */
-        .vehicle-display-pod {
-            width: 100%;
-            height: 48%;
-            background: radial-gradient(circle, #141b3a 0%, #070a18 100%);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            position: relative;
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
-        /* 3D-Style Neon Hologram Car Rendering Box */
-        .holo-car-box {
-            width: 180px;
-            height: 75px;
-            position: relative;
-            background: currentColor;
-            border-radius: 15px 45px 10px 10px;
-            box-shadow: 0 0 30px var(--neon-blue);
-            transition: all 0.5s ease;
-        }
-        .holo-car-box::before { /* Gildiraklar */
-            content: ''; position: absolute; bottom: -8px; left: 25px; width: 26px; height: 26px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff;
-        }
-        .holo-car-box::after {
-            content: ''; position: absolute; bottom: -8px; right: 30px; width: 26px; height: 26px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff;
-        }
-        .car-window {
-            position: absolute; top: 10px; right: 35px; width: 50px; height: 25px; background: #000; border-radius: 5px 20px 0 0; opacity: 0.7;
+        /* CENTER CONTAINER WITH NEON SHADOW */
+        .maintenance-box {
+            background: rgba(16, 22, 47, 0.85);
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-sizing: border-box;
+            backdrop-filter: blur(12px);
+            animation: pulseGlow 3s infinite alternate;
         }
 
-        /* METRICS & BID CONTROLS */
-        .meta-status-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 6px 0;
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.3); }
+            100% { box-shadow: 0 0 45px rgba(0, 240, 255, 0.5); }
         }
 
-        .meta-details h2 { margin: 0; font-size: 20px; font-weight: 800; color: #fff; }
-        .nexus-tag {
-            display: inline-block;
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-top: 3px;
-        }
-
-        .live-stats-box { text-align: right; }
-        .badge-countdown { background: var(--neon-red); color: white; padding: 4px 10px; border-radius: 20px; font-weight: 900; font-size: 13px; box-shadow: 0 0 10px rgba(255,51,102,0.4); }
-        .price-tag { font-size: 28px; font-weight: 900; color: var(--neon-green); margin-top: 2px; text-shadow: 0 0 10px rgba(0,255,102,0.3); }
-
-        /* LIVE FEED CONSOLE */
-        .nexus-feed-log {
-            height: 70px;
-            background: #060914;
-            border-radius: 8px;
-            padding: 8px;
-            overflow-y: auto;
-            font-family: monospace;
-            font-size: 11px;
-            border: 1px solid rgba(0, 240, 255, 0.05);
-        }
-        .log-row { padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,0.01); }
-
-        /* TELEFON VA PC UCHUN ENG QULAY STAVKA TUGMASI */
-        .btn-nexus-bid {
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 16px;
+        .logo {
+            font-size: 28px;
             font-weight: 900;
-            border-radius: 12px;
-            cursor: pointer;
-            text-transform: uppercase;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
-            letter-spacing: 1px;
-            transition: transform 0.1s, filter 0.2s;
-        }
-        .btn-nexus-bid:active { transform: scale(0.97); filter: brightness(1.2); }
-
-        /* RIGHT SIDE: GARAGE SYSTEM */
-        .sidebar-garage-pod {
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            border-radius: 16px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(10px);
-        }
-
-        .garage-headline {
-            font-size: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            border-left: 3px solid var(--neon-purple);
-            padding-left: 6px;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
-            letter-spacing: 0.5px;
-            color: #d8b4fe;
+            text-transform: uppercase;
         }
 
-        .garage-list-scroller {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .garage-item-card {
-            background: rgba(25, 34, 69, 0.6);
-            border: 1px solid rgba(255,255,255,0.03);
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn-liquidate {
-            background: var(--neon-green);
-            color: #000;
-            border: none;
-            padding: 6px 10px;
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 51, 102, 0.15);
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 800;
-            font-size: 11px;
-            border-radius: 5px;
-            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
         }
 
-        /* TELEFONLAR UCHUN INTERFEYSNI MOSLASHTIRISH (RESPONSIVE) */
-        @media (max-width: 768px) {
-            .nexus-grid {
-                grid-template-columns: 1fr;
-                grid-template-rows: 1.8fr 1fr;
-                overflow-y: auto;
-            }
-            body { overflow: auto; height: auto; }
-            .nexus-grid { height: auto; }
-            .vehicle-display-pod { height: 180px; }
-            .brand-title { font-size: 16px; }
+        .message {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #9cb0d8;
+            margin-bottom: 30px;
+        }
+
+        /* COUNTDOWN DIGITAL COUNTER */
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .timer-card {
+            background: rgba(10, 15, 36, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 10px;
+            padding: 12px 18px;
+            min-width: 70px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .timer-num {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--neon-blue);
+            font-family: monospace;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .timer-lbl {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #627293;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="nexus-header">
-        <div class="brand-title">NEXUS AUCTION</div>
+    <div class="maintenance-box">
+        <div class="logo">NEXUS AUCTION</div>
+        <div class="status-badge">SYSTEM UPDATE</div>
         
-        <div class="header-controls">
-            <div class="promo-input-box">
-                <input type="text" id="promo-field" placeholder="Promo...">
-                <button class="btn-apply" onclick="processPromo()">OK</button>
-            </div>
-            <select id="lang-toggle" onchange="triggerLangSwitch()">
-                <option value="ru">RU</option>
-                <option value="en">EN</option>
-            </select>
-            <div class="wallet-display">💵 $<span id="wallet-field">150</span></div>
-        </div>
-    </div>
-
-    <div class="nexus-grid">
-        
-        <div class="auction-arena">
-            <div class="vehicle-display-pod">
-                <div class="holo-car-box" id="vector-car-body" style="color: var(--neon-blue);">
-                    <div class="car-window"></div>
-                </div>
-            </div>
-
-            <div class="meta-status-container">
-                <div class="meta-details">
-                    <h2 id="vehicle-title">Connecting...</h2>
-                    <div class="nexus-tag" id="lbl-condition">Nexus Verified / 2026 Asset</div>
-                </div>
-                <div class="live-stats-box">
-                    <span id="timer-badge" class="badge-countdown">4.0s</span>
-                    <div id="price-badge" class="price-tag">$0</div>
-                </div>
-            </div>
-
-            <div class="nexus-feed-log" id="log-console"></div>
-
-            <button class="btn-nexus-bid" id="bid-action-btn" onclick="submitPlayerBid()">Повысить ставку (+$10)</button>
+        <div class="message">
+            Игра временно приостановлена разработчиками для внедрения масштабного обновления. <br>
+            <b>Ориентировочное время запуска: через 2 часа 30 минут.</b>
         </div>
 
-        <div class="sidebar-garage-pod">
-            <div class="garage-headline" id="lbl-garage-title">Мой Гараж (0)</div>
-            <div class="garage-list-scroller" id="garage-list-box">
-                </div>
+        <div class="timer-grid">
+            <div class="timer-card">
+                <div class="timer-num" id="hr">02</div>
+                <div class="timer-lbl">Часы</div>
+            </div>
+            <div class="timer-card">
+                <div class="timer-num" id="mn">30</div>
+                <div class="timer-lbl">Мин</div>
+            </div>
+            <div class="timer-card">
+                <div class="timer-num" id="sc">00</div>
+                <div class="timer-lbl">Сек</div>
+            </div>
         </div>
-
     </div>
 
     <script>
-        const localizedDict = {
-            ru: {
-                bid: "Повысить ставку (+$10)",
-                next: "Следующий Лот ➔",
-                cond: "Nexus Verified / Лот 2026",
-                won: "🎉 Вы выиграли этот лот! Машина отправлена в ваш Гараж.",
-                botWon: "забрал лот. Ваши замороженные средства возвращены на кошелек.",
-                noMoney: "Недостаточно средств для совершения ставки!",
-                promoOk: "Промокод успешно активирован!",
-                promoUsed: "Вы уже использовали этот промокод ранее!",
-                promoWrong: "Такого кода не существует.",
-                sell: "Продать",
-                gar: "Мой Гараж"
-            },
-            en: {
-                bid: "Place Bid (+$10)",
-                next: "Next Lot ➔",
-                cond: "Nexus Verified / 2026 Lot",
-                won: "🎉 You won this lot! Vehicle added to your Garage.",
-                botWon: "won the lot. Your locked bids have been refunded.",
-                noMoney: "Insufficient balance to place a bid!",
-                promoOk: "Promo code activated successfully!",
-                promoWrong: "Invalid promo code.",
-                promoUsed: "You have already used this promo code!",
-                sell: "Sell",
-                gar: "My Garage"
-            }
-        };
+        // VAQTIY REAL VAQTLARNI SAQLASH (SAYTDAN CHIQIB KETSA HAM TO'XTAMAYDI)
+        const durationInMs = (2 * 60 * 60 * 1000) + (30 * 60 * 1000); // 2 soat 30 daqiqa millisekundlarda
+        let targetTime = localStorage.getItem('nexus_maintenance_target');
 
-        let activeLang = 'ru';
-
-        // 100% VISIBLE HEX NEON DESIGN CONFIGURATIONS (SUV, SEDAN, SPORT)
-        const carRegistry = [
-            { name: "VAZ 2101 Jiguli (1976)", base: 30, max: 80, color: "#9ca3af" },
-            { name: "VAZ 2106 (1991)", base: 40, max: 95, color: "#4b5563" },
-            { name: "Daewoo Tico (1998)", base: 35, max: 90, color: "#f59e0b" },
-            { name: "Daewoo Matiz (2005)", base: 50, max: 120, color: "#10b981" },
-            { name: "Chevrolet Spark (2012)", base: 65, max: 155, color: "#06b6d4" },
-            { name: "Chevrolet Nexia 3 (2019)", base: 85, max: 195, color: "#3b82f6" },
-            { name: "Chevrolet Cobalt (2021)", base: 95, max: 220, color: "#6366f1" },
-            { name: "Chevrolet Lacetti (2018)", base: 90, max: 210, color: "#a855f7" },
-            { name: "Hyundai Elantra (2023)", base: 145, max: 310, color: "#ec4899" },
-            { name: "Kia Optima K5 (2022)", base: 185, max: 395, color: "#f43f5e" },
-            { name: "Toyota Camry V70 (2021)", base: 230, max: 460, color: "#14b8a6" },
-            { name: "BYD Song Plus EV (2024)", base: 290, max: 590, color: "#10b981" },
-            { name: "Kia Sportage Turbo (2025)", base: 450, max: 1150, color: "#f59e0b" },
-            { name: "Kia Sportage GT-Line (2026)", base: 520, max: 1390, color: "#ef4444" }, // Qimmat va yuqori raqobat
-            { name: "BMW M5 Competition (2024)", base: 650, max: 1550, color: "#3b82f6" },
-            { name: "Mercedes-Benz G63 AMG (2025)", base: 850, max: 2300, color: "#111827" },
-            { name: "Chevrolet Camaro SS (2023)", base: 320, max: 760, color: "#eab308" }
-        ];
-
-        const virtualOpponents = ["NexusTrader", "CyberSniper", "Samarkand_Whale", "Tashkent_AWD", "TechBroker"];
-
-        // RUNTIME STORAGE ENGINE
-        let balance = parseFloat(localStorage.getItem('nx_cash')) || 150;
-        let garage = JSON.parse(localStorage.getItem('nx_vault')) || [];
-        let claimedPromos = JSON.parse(localStorage.getItem('nx_promo_ledger')) || [];
-
-        let currentCar = null;
-        let currentPrice = 0;
-        let leadBidder = "";
-        let playerInvestedSum = 0;
-        let timerClock = 4.0;
-
-        let intervalClock = null;
-        let timeoutAi = null;
-        let isSessionActive = true;
-
-        function startNexusAuctionSystem() {
-            refreshInterface();
-            loadNextAuctionSession();
+        if (!targetTime) {
+            // Agar taymer birinchi marta o'rnatilayotgan bo'lsa, hozirgi vaqtga 2.5 soat qo'shamiz
+            targetTime = Date.now() + durationInMs;
+            localStorage.setItem('nexus_maintenance_target', targetTime);
+        } else {
+            targetTime = parseInt(targetTime);
         }
 
-        function refreshInterface() {
-            document.getElementById('wallet-field').innerText = Math.floor(balance);
-            document.getElementById('lbl-garage-title').innerText = `${localizedDict[activeLang].gar} (${garage.length})`;
-            document.getElementById('lbl-condition').innerText = localizedDict[activeLang].cond;
-            
-            if (isSessionActive) {
-                document.getElementById('bid-action-btn').innerText = localizedDict[activeLang].bid;
-            } else {
-                document.getElementById('bid-action-btn').innerText = localizedDict[activeLang].next;
-            }
+        function updateCountdown() {
+            const currentTime = Date.now();
+            const difference = targetTime - currentTime;
 
-            // Sync Garage Pod List
-            const scroller = document.getElementById('garage-list-box');
-            scroller.innerHTML = "";
-            garage.forEach((car, idx) => {
-                const row = document.createElement('div');
-                row.className = "garage-item-card";
-                row.innerHTML = `
-                    <div>
-                        <div style="font-weight:800; font-size:13px;">${car.name}</div>
-                        <div style="color:var(--neon-green); font-size:11px; margin-top:2px;">Buy: $${car.buy} ➔ Est: $${car.sell}</div>
-                    </div>
-                    <button class="btn-liquidate" onclick="sellGarageAsset(${idx})">${localizedDict[activeLang].sell}</button>
+            if (difference <= 0) {
+                // Vaqt tugaganda blokirovka olib tashlanadi va yangi o'yinga ruxsat beriladi
+                localStorage.removeItem('nexus_maintenance_target');
+                document.querySelector('.maintenance-box').innerHTML = `
+                    <div class="logo">NEXUS AUCTION</div>
+                    <div class="status-badge" style="border-color:var(--neon-green); color:var(--neon-green); background:rgba(0,255,102,0.1)">ONLINE</div>
+                    <div class="message">Обновление успешно завершено! Перезагрузите страницу для входа в игру.</div>
                 `;
-                scroller.appendChild(row);
-            });
-
-            localStorage.setItem('nx_cash', balance);
-            localStorage.setItem('nx_vault', JSON.stringify(garage));
-            localStorage.setItem('nx_promo_ledger', JSON.stringify(claimedPromos));
-        }
-
-        function loadNextAuctionSession() {
-            clearInterval(intervalClock);
-            clearTimeout(timeoutAi);
-
-            currentCar = carRegistry[Math.floor(Math.random() * carRegistry.length)];
-            currentPrice = currentCar.base;
-            leadBidder = "";
-            playerInvestedSum = 0;
-            timerClock = 4.0;
-            isSessionActive = true;
-
-            // 100% xatolarsiz chiziladigan vizual dizayn rangini yangilash
-            document.getElementById('vector-car-body').style.color = currentCar.color;
-            document.getElementById('vehicle-title').innerText = currentCar.name;
-            document.getElementById('price-badge').innerText = "$" + currentPrice;
-            document.getElementById('timer-badge').innerText = timerClock.toFixed(1) + "s";
-            document.getElementById('timer-badge').style.background = "var(--neon-red)";
-            
-            document.getElementById('log-console').innerHTML = `<div class="log-row" style="color:var(--neon-blue)">[NEXUS]: Лот открыт. Стартовая цена: $${currentPrice}</div>`;
-            document.getElementById('bid-action-btn').onclick = submitPlayerBid;
-
-            refreshInterface();
-            triggerCountdown();
-            computeAiMoveLogic();
-        }
-
-        function triggerCountdown() {
-            intervalClock = setInterval(() => {
-                timerClock -= 0.1;
-                if (timerClock <= 0) {
-                    timerClock = 0;
-                    clearInterval(intervalClock);
-                    closeActiveSession();
-                }
-                document.getElementById('timer-badge').innerText = timerClock.toFixed(1) + "s";
-            }, 100);
-        }
-
-        function submitPlayerBid() {
-            if (!isSessionActive) return;
-
-            if (balance < 10) {
-                alert(localizedDict[activeLang].noMoney);
                 return;
             }
 
-            balance -= 10;
-            playerInvestedSum += 10;
-            currentPrice += 10;
-            leadBidder = "Player";
-            timerClock = 4.0; // Reset timer back to 4s
+            // Matematik hisob-kitoblar (Soat, Daqiqa, Soniya)
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-            appendConsoleLog("You", currentPrice);
-            document.getElementById('price-badge').innerText = "$" + currentPrice;
-            refreshInterface();
-
-            clearTimeout(timeoutAi);
-            computeAiMoveLogic();
+            // Ekranga chiqarish (Agar 1 xonali bo'lsa oldiga 0 qo'shadi)
+            document.getElementById('hr').innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById('mn').innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById('sc').innerText = seconds < 10 ? "0" + seconds : seconds;
         }
 
-        function computeAiMoveLogic() {
-            if (!isSessionActive) return;
-
-            if (currentPrice < currentCar.max) {
-                // Balanslashtirilgan o'rtacha qiyinlik darajasi
-                if (Math.random() > 0.45) {
-                    let calculationSpeed = 700 + Math.random() * 1200; 
-                    timeoutAi = setTimeout(() => {
-                        if (!isSessionActive) return;
-
-                        currentPrice += 10;
-                        let virtualOpponent = virtualOpponents[Math.floor(Math.random() * virtualOpponents.length)];
-                        leadBidder = virtualOpponent;
-                        timerClock = 4.0; // Reset timer
-
-                        appendConsoleLog(virtualOpponent, currentPrice);
-                        document.getElementById('price-badge').innerText = "$" + currentPrice;
-
-                        computeAiMoveLogic();
-                    }, calculationSpeed);
-                }
-            }
-        }
-
-        function appendConsoleLog(user, price) {
-            const consoleBox = document.getElementById('log-console');
-            let color = user === "You" ? "var(--neon-green)" : "var(--text-white)";
-            consoleBox.innerHTML += `<div class="log-row" style="color:${color}">➔ <b>${user}</b> поставил: <b>$${price}</b></div>`;
-            consoleBox.scrollTop = consoleBox.scrollHeight;
-        }
-
-        function closeActiveSession() {
-            isSessionActive = false;
-            clearTimeout(timeoutAi);
-            document.getElementById('timer-badge').style.background = "#374151";
-
-            if (leadBidder === "Player") {
-                alert(localizedDict[activeLang].won);
-                let evaluationMargin = 25 + Math.floor(Math.random() * 16); 
-                garage.push({
-                    name: currentCar.name,
-                    buy: currentPrice,
-                    sell: currentPrice + evaluationMargin
-                });
-            } else if (leadBidder === "") {
-                alert("No bids placed on this asset.");
-            } else {
-                if (playerInvestedSum > 0) {
-                    balance += playerInvestedSum; // Pullar kuyib ketmaydi, 100% qaytadi!
-                    alert(`${leadBidder} ${localizedDict[activeLang].botWon}`);
-                } else {
-                    alert(`${leadBidder} won this asset.`);
-                }
-            }
-
-            document.getElementById('bid-action-btn').innerText = localizedDict[activeLang].next;
-            document.getElementById('bid-action-btn').onclick = loadNextAuctionSession;
-            refreshInterface();
-        }
-
-        function sellGarageAsset(index) {
-            balance += garage[index].sell;
-            garage.splice(index, 1);
-            refreshInterface();
-        }
-
-        function processPromo() {
-            const field = document.getElementById('promo-field').value.trim();
-            if (field === "seevent2026" || field === "welecet200") {
-                if (claimedPromos.includes(field)) {
-                    alert(localizedDict[activeLang].promoUsed);
-                    return;
-                }
-                let bonusReward = field === "seevent2026" ? 500 : 800;
-                balance += bonusReward;
-                claimedPromos.push(field);
-                alert(localizedDict[activeLang].promoOk + ` (+$${bonusReward})`);
-                document.getElementById('promo-field').value = "";
-                refreshInterface();
-            } else {
-                alert(localizedDict[activeLang].promoWrong);
-            }
-        }
-
-        function triggerLangSwitch() {
-            activeLang = document.getElementById('lang-toggle').value;
-            refreshInterface();
-        }
-
-        window.onload = startNexusAuctionSystem;
+        // Har soniyada vaqtni yangilab turish
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
