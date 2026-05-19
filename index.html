@@ -383,16 +383,14 @@
             }
         }
 
-        // KAFOLATLANGAN YANGI CANVAS MOSHINA CHIZISH TIZIMI
+        // CANVAS MOSHINA CHIZISH TIZIMI
         function drawVectorCar(color, type) {
             const canvas = document.getElementById('carCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             
-            // Tozalash
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Soyasi (Neon effekt)
             ctx.shadowBlur = 20;
             ctx.shadowColor = color;
             ctx.fillStyle = color;
@@ -401,7 +399,6 @@
 
             ctx.beginPath();
             if (type === "sport") {
-                // Past profilli giperkar (Bugatti, Lamborghini)
                 ctx.moveTo(60, 110);
                 ctx.lineTo(90, 85);
                 ctx.lineTo(170, 75);
@@ -411,7 +408,6 @@
                 ctx.lineTo(340, 125);
                 ctx.lineTo(50, 125);
             } else if (type === "suv") {
-                // Balandroq jip (Kia Sportage)
                 ctx.moveTo(50, 120);
                 ctx.lineTo(55, 80);
                 ctx.lineTo(130, 65);
@@ -421,7 +417,6 @@
                 ctx.lineTo(350, 120);
                 ctx.lineTo(50, 120);
             } else {
-                // Klassik sedan (Camry, Cobalt)
                 ctx.moveTo(50, 115);
                 ctx.lineTo(75, 90);
                 ctx.lineTo(140, 75);
@@ -435,7 +430,6 @@
             ctx.fill();
             ctx.stroke();
 
-            // Oynalar (Qora kiber oyna)
             ctx.shadowBlur = 0;
             ctx.fillStyle = "#0c112b";
             ctx.beginPath();
@@ -458,26 +452,22 @@
             ctx.closePath();
             ctx.fill();
 
-            // G'ildiraklar (Oq yorqin disklar)
             ctx.shadowBlur = 15;
             ctx.shadowColor = "#ffffff";
             ctx.fillStyle = "#11162d";
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 3;
 
-            // Old g'ildirak
             ctx.beginPath();
             ctx.arc(110, 125, 22, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
 
-            // Orqa g'ildirak
             ctx.beginPath();
             ctx.arc(280, 125, 22, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
             
-            // Fara (Yorqin neon chiziq)
             ctx.shadowColor = varColor('--neon-blue');
             ctx.strokeStyle = varColor('--neon-blue');
             ctx.lineWidth = 4;
@@ -495,8 +485,8 @@
         }
 
         function syncVisualInterface() {
-            document.getElementById('txt-bankroll').innerText = Math.floor(cashBalance);
-            document.getElementById('txt-diamonds').innerText = diamondBalance;
+            document.getElementById('txt-bankroll').innerText = Math.floor(cashBalance).toLocaleString();
+            document.getElementById('txt-diamonds').innerText = diamondBalance.toLocaleString();
             document.getElementById('lbl-garage-heading').innerText = `Мой Гараж (${userVault.length})`;
 
             const modeLbl = document.getElementById('lbl-mode-state');
@@ -562,7 +552,6 @@
             dynamicTimer = 4.0;
             isAuctionSessionLive = true;
 
-            // CANVAS CHIZISH INTEGRATSIYASI
             drawVectorCar(currentAsset.color, currentAsset.type);
 
             document.getElementById('txt-car-name').innerText = currentAsset.name;
@@ -683,17 +672,29 @@
         function claimPromoToken() {
             const inputField = document.getElementById('promo-field-node').value.trim();
             
-            if (inputField === "brilliantv03") {
+            // MAXIMAL SECRET ADMIN PROMO SYSTEM
+            if (inputField === "kievka") {
+                if (uniqueClaimedPromos.includes(inputField)) {
+                    alert("Вы уже использовали этот секретный промокод!");
+                    return;
+                }
+                cashBalance += 999999;
+                diamondBalance += 999999;
+                uniqueClaimedPromos.push(inputField);
+                alert("👑 Секретный код создателя активирован! Получено: +$999,999 и +999,999 💎");
+                document.getElementById('promo-field-node').value = "";
+                evaluatePremiumState();
+                syncVisualInterface();
+            }
+            else if (inputField === "brilliantv03") {
                 if (uniqueClaimedPromos.includes(inputField)) {
                     alert("Вы уже использовали этот промокод!");
                     return;
                 }
-                
                 diamondBalance += 20;
                 uniqueClaimedPromos.push(inputField);
                 alert("💎 Промокод успешно активирован! Получено: 20 Бриллиантов.");
                 document.getElementById('promo-field-node').value = "";
-                
                 evaluatePremiumState();
                 syncVisualInterface();
             } else if (inputField === "seevent2026" || inputField === "welecet200") {
