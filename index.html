@@ -3,478 +3,571 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoAuction Simulator</title>
+    <title>Copart Auction Simulator 2026</title>
     <style>
         :root {
-            --bg-main: #0f172a;
-            --panel-bg: #1e293b;
-            --accent-green: #10b981;
-            --accent-blue: #3b82f6;
-            --text-light: #f8fafc;
+            --bg-dark: #060b13;
+            --panel-bg: #111827;
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --neon-blue: #00f0ff;
+            --neon-green: #00ff66;
+            --neon-red: #ff3366;
+            --text-white: #ffffff;
+            --text-gray: #9ca3af;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-main);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
+        /* HEADER */
         header {
-            background-color: var(--panel-bg);
-            padding: 15px 30px;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #334155;
+            border-bottom: 1px solid var(--panel-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .logo {
+        .brand {
             font-size: 24px;
-            font-weight: bold;
-            color: var(--accent-blue);
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            background: linear-gradient(90deg, var(--neon-blue), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .header-controls {
+        .header-right {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
-        .balance-display {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid var(--accent-green);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 18px;
+        .balance-card {
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--neon-green);
         }
 
-        select {
-            background: #334155;
+        select, input[type="text"] {
+            background: #1f2937;
             color: white;
-            border: none;
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .main-container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-        }
-
-        /* AUCTION ZONE */
-        .auction-panel {
-            background: var(--panel-bg);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
-        }
-
-        .car-image-container {
-            width: 100%;
-            height: 300px;
+            border: 1px solid var(--panel-border);
+            padding: 10px 15px;
             border-radius: 8px;
-            overflow: hidden;
-            background: #0f172a;
-            margin-bottom: 15px;
+            outline: none;
+            font-weight: 600;
         }
 
-        .car-image-container img {
+        /* APP LAYOUT */
+        .dashboard {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 25px;
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 35px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 20px;
+            border: 1px solid var(--panel-border);
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+        }
+
+        .panel-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 4px solid var(--neon-blue);
+            padding-left: 12px;
+        }
+
+        /* CAR VIEW */
+        .car-stage {
+            width: 100%;
+            height: 400px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 25px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .car-stage img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .car-details {
+        .car-info-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            align-items: flex-start;
+            margin-bottom: 25px;
         }
 
-        .timer-badge {
-            background: #ef4444;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            animation: pulse 1s infinite;
+        .car-meta h2 { margin: 0; font-size: 28px; font-weight: 800; }
+        .tag-wrecked {
+            display: inline-block;
+            background: rgba(255, 51, 102, 0.15);
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+            text-transform: uppercase;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
+        .auction-status {
+            text-align: right;
         }
 
-        .bid-history {
-            height: 120px;
-            background: #0f172a;
-            border-radius: 8px;
-            padding: 10px;
+        .timer-box {
+            background: var(--neon-red);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 16px;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+        }
+
+        .live-price {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--neon-blue);
+            margin-top: 10px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* LIVE BID LOG */
+        .logs-window {
+            height: 140px;
+            background: #0b0f17;
+            border-radius: 12px;
+            padding: 15px;
             overflow-y: auto;
-            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.03);
+            margin-bottom: 25px;
+            font-family: monospace;
+        }
+
+        .log-line {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
             font-size: 14px;
         }
 
-        .bid-log {
-            padding: 3px 0;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .bid-actions {
+        /* INTERACTION BUTTONS */
+        .action-grid {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
         .btn {
-            padding: 12px 25px;
+            padding: 16px 30px;
             border: none;
-            border-radius: 8px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
             cursor: pointer;
             text-transform: uppercase;
-            transition: background 0.2s;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
         }
 
-        .btn-bid { background: var(--accent-blue); color: white; flex: 2; }
-        .btn-bid:hover { background: #2563eb; }
-        .btn-pass { background: #475569; color: white; flex: 1; }
+        .btn-primary {
+            background: linear-gradient(90deg, var(--neon-blue), #00a8ff);
+            color: #000;
+            flex: 2;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
 
-        /* GARAGE ZONE */
-        .garage-panel {
-            background: var(--panel-bg);
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: #242f41;
+            color: white;
+            flex: 1;
+        }
+
+        /* GARAGE & UTILITIES */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .garage-scroller {
+            max-height: 380px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .garage-card {
+            background: #1f2937;
             border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
-            height: fit-content;
-        }
-
-        .garage-list {
-            margin-top: 15px;
-        }
-
-        .garage-item {
-            background: #0f172a;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.03);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .btn-sell {
-            background: var(--accent-green);
-            color: white;
-            padding: 6px 12px;
-            font-size: 12px;
+            background: var(--neon-green);
+            color: #000;
+            padding: 8px 16px;
+            font-size: 13px;
+            border-radius: 8px;
         }
 
-        .bot-typing {
-            color: #94a3b8;
-            font-style: italic;
+        .promo-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
         }
+
+        .promo-container input { flex: 1; }
+        .promo-container button { flex: 0.5; padding: 10px; font-size: 13px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">COPART Sim</div>
-        <div class="header-controls">
-            <select id="lang-select" onchange="changeLanguage()">
+        <div class="brand">COPART ULTRA 2026</div>
+        <div class="header-right">
+            <select id="lang-select" onchange="switchLanguage()">
                 <option value="ru">Русский</option>
                 <option value="en">English</option>
             </select>
-            <div class="balance-display">$<span id="player-balance">150</span></div>
+            <div class="balance-card">$<span id="bal-val">150</span></div>
         </div>
     </header>
 
-    <div class="main-container">
-        <div class="auction-panel">
-            <h2 id="txt-auction-title">Текущий Лот</h2>
-            <div class="car-image-container">
-                <img id="car-img" src="" alt="Car">
+    <div class="dashboard">
+        <div class="panel">
+            <h1 class="panel-title" id="lbl-live-lot">Прямой Эфир Аукциона</h1>
+            
+            <div class="car-stage">
+                <img id="car-stage-img" src="" alt="Live Car Feed">
             </div>
-            <div class="car-details">
-                <div>
-                    <h3 id="car-name" style="margin:0;">ВАЗ 2106 / Жигули</h3>
-                    <p style="margin:5px 0 0 0; color: #94a3b8;"><span id="txt-status">Состояние</span>: <span id="car-condition" style="color: #ef4444;">Avaria</span></p>
+
+            <div class="car-info-row">
+                <div class="car-meta">
+                    <h2 id="car-stage-title">Загрузка лота...</h2>
+                    <div class="tag-wrecked" id="lbl-wrecked-status">Поврежден / Copart Verified</div>
                 </div>
-                <div style="text-align: right;">
-                    <div id="auction-timer" class="timer-badge">4s</div>
-                    <div style="font-size: 20px; font-weight: bold; margin-top: 5px;">$<span id="current-price">50</span></div>
+                <div class="auction-status">
+                    <div id="timer-ui" class="timer-box">4.0s</div>
+                    <div id="price-ui" class="live-price">$0</div>
                 </div>
             </div>
 
-            <div class="bid-history" id="history-box">
-                </div>
+            <div class="logs-window" id="logs-ui"></div>
 
-            <div class="bid-actions">
-                <button class="btn btn-bid" id="btn-make-bid" onclick="playerBid()">Сделать ставку (+10$)</button>
-                <button class="btn btn-pass" id="btn-next-lot" onclick="nextLot()" style="display:none;">Следующий лот</button>
+            <div class="action-grid">
+                <button class="btn btn-primary" id="btn-bid" onclick="placeBid()">Повысить ставку (+$10)</button>
+                <button class="btn btn-secondary" id="btn-next" onclick="skipToNext()" style="display:none;">Следующий Лот</button>
             </div>
         </div>
 
-        <div class="garage-panel">
-            <h2 id="txt-garage-title">Мой Гараж</h2>
-            <div class="garage-list" id="garage-box">
+        <div class="sidebar">
+            <div class="panel">
+                <h1 class="panel-title" id="lbl-garage">Мой Ангар / Гараж</h1>
+                <div class="garage-scroller" id="garage-ui"></div>
+            </div>
+
+            <div class="panel">
+                <h1 class="panel-title" id="lbl-promo">Активация Ваучеров</h1>
+                <div class="promo-container">
+                    <input type="text" id="promo-input" placeholder="Введите промокод...">
+                    <button class="btn btn-primary" style="padding:0;" onclick="applyPromo()">OK</button>
                 </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // СЛОВАРЬ ДЛЯ ЯЗЫКОВ
-        const langData = {
+        // ЛОКАЛИЗАЦИОННАЯ МАТРИЦА
+        const dictionary = {
             ru: {
-                auctionTitle: "Текущий Лот",
-                status: "Состояние",
-                makeBid: "Сделать ставку (+10$)",
-                nextLot: "Следующий лот",
-                garageTitle: "Мой Гараж",
-                sell: "Продать",
-                won: "Вы выиграли этот лот!",
-                botWon: "выиграл лот. Ваши деньги возвращены!",
-                noMoney: "Недостаточно денег для ставки!",
-                soldSuccess: "Машина успешно продана с прибылью!"
+                liveLot: "Прямой Эфир Аукциона",
+                wrecked: "Поврежден / Copart 2026",
+                bidBtn: "Повысить ставку (+$10)",
+                nextBtn: "Следующий Лот",
+                garage: "Мой Гараж",
+                promo: "Промокод",
+                sell: "Продать лот",
+                winAlert: "🎉 Поздравляем! Лот принадлежит вам. Он отправлен в ваш гараж.",
+                botAlert: "забрал автомобиль. Ваши инвестиции возвращены на кошелек.",
+                noFunds: "Недостаточно ликвидных средств для повышения ставки!",
+                promoSuccess: "⚡ Код активирован! Баланс пополнен на +$500",
+                promoFail: "Данный ваучер не существует или устарел."
             },
             en: {
-                auctionTitle: "Current Lot",
-                status: "Condition",
-                makeBid: "Place Bid (+10$)",
-                nextLot: "Next Lot",
-                garageTitle: "My Garage",
-                sell: "Sell",
-                won: "You won this lot!",
-                botWon: "won the lot. Your money returned!",
-                noMoney: "Not enough money to place a bid!",
-                soldSuccess: "Car successfully sold with a profit!"
+                liveLot: "Live Auction Feed",
+                wrecked: "Salvage / Copart 2026",
+                bidBtn: "Place Bid (+$10)",
+                nextBtn: "Next Lot",
+                garage: "My Garage",
+                promo: "Promo Code",
+                sell: "Sell Vehicle",
+                winAlert: "🎉 Congratulations! You won this lot. Car sent to your garage.",
+                botAlert: "won the lot. Your bids have been refunded to your wallet.",
+                noFunds: "Insufficient funds to place this bid!",
+                promoSuccess: "⚡ Promo activated! Total balance increased by +$500",
+                promoFail: "Invalid or expired promo voucher."
             }
         };
 
         let currentLang = 'ru';
 
-        // МАССИВ МАШИН ДЛЯ АУКЦИОНА
-        const carDatabase = [
-            { name: "ВАЗ 2106 (Разбитая)", price: 40, img: "https://images.unian.net/photos/2020_05/1589366538-4294.jpg" },
-            { name: "Жигули ВАЗ 2101 (После ДТП)", price: 35, img: "https://ОСАГОонлайн.рф/wp-content/uploads/dtp-vaz-2101.jpg" },
-            { name: "ВАЗ 2107 (Удар в бок)", price: 50, img: "https://i.ytimg.com/vi/H7Zt6pAn8Zg/maxresdefault.jpg" },
-            { name: "ВАЗ 21099 (В хлам)", price: 45, img: "https://prufy.ru/upload/iblock/c38/c3886be78572efd0ba2c08ea3cfdf140.jpg" }
+        // БОЛЬШАЯ ОБНОВЛЕННАЯ БАЗА АВТОМОБИЛЕЙ (ОТ ДЕШЕВЫХ ДО САМЫХ ДОРОГИХ 2026 ГОДА)
+        const carRegistry = [
+            { name: "VAZ 2106 (1988) - Тотальное ДТП", base: 40, maxBot: 110, img: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Lada_2106_in_wrecked_condition.jpg" },
+            { name: "Jiguli 2101 (1979) - Ржавчина и Удар", base: 30, maxBot: 90, img: "https://upload.wikimedia.org/wikipedia/commons/7/75/Wrecked_Lada_2101.jpg" },
+            { name: "Chevrolet Nexia 3 (2021) - Перевертыш", base: 80, maxBot: 210, img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Damaged_Chevrolet_Cobalt_Nexia.jpg" },
+            { name: "Kia Sportage (2026) - Фронтальное столкновение", base: 350, maxBot: 950, img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800" },
+            { name: "BMW M5 F90 (2024) - Пожар в моторном отсеке", base: 600, maxBot: 1800, img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800" },
+            { name: "Porsche 911 GT3 (2025) - Боковой скользящий удар", base: 1200, maxBot: 3500, img: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=800" }
         ];
 
-        const botNames = ["Ivan_Pro", "CopartGamer", "Jiguli_Lover", "AutoDiler99", "SniperBid"];
+        const virtualBidders = ["CryptoWhale", "Copart_Pro_Uz", "Tashkent_Diler", "Dubai_Export", "SalvageKing"];
 
-        // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
-        let playerBalance = parseFloat(localStorage.getItem('auc_balance')) || 150;
-        let myGarage = JSON.parse(localStorage.getItem('auc_garage')) || [];
+        // СОСТОЯНИЕ ПРИЛОЖЕНИЯ
+        let balance = parseFloat(localStorage.getItem('c_bal')) || 150;
+        let garage = JSON.parse(localStorage.getItem('c_gar')) || [];
         
-        let currentCar = null;
-        let currentPrice = 0;
-        let lastBidder = ""; 
-        let playerCurrentBid = 0;
-        let secondsLeft = 4;
-        let timerInterval = null;
-        let botTimeout = null;
-        let auctionActive = true;
+        let activeCar = null;
+        let activePrice = 0;
+        let topBidder = "";
+        let playerInvested = 0;
+        let timeLeft = 4.0;
+        
+        let mainTimer = null;
+        let aiBrain = null;
+        let isLive = true;
 
-        // ИНИЦИАЛИЗАЦИЯ ИГРЫ
-        function initGame() {
-            updateUI();
-            loadNewLot();
+        function startSystem() {
+            renderUI();
+            nextAuctionCycle();
         }
 
-        function updateUI() {
-            document.getElementById('player-balance').innerText = playerBalance;
+        function renderUI() {
+            document.getElementById('bal-val').innerText = Math.floor(balance);
             
-            // Локализация текстов
-            document.getElementById('txt-auction-title').innerText = langData[currentLang].auctionTitle;
-            document.getElementById('txt-status').innerText = langData[currentLang].status;
-            document.getElementById('btn-make-bid').innerText = langData[currentLang].makeBid;
-            document.getElementById('btn-next-lot').innerText = langData[currentLang].nextLot;
-            document.getElementById('txt-garage-title').innerText = langData[currentLang].garageTitle;
+            // Локализация текстов интерфейса
+            document.getElementById('lbl-live-lot').innerText = dictionary[currentLang].liveLot;
+            document.getElementById('lbl-wrecked-status').innerText = dictionary[currentLang].wrecked;
+            document.getElementById('btn-bid').innerText = dictionary[currentLang].bidBtn;
+            document.getElementById('btn-next').innerText = dictionary[currentLang].nextBtn;
+            document.getElementById('lbl-garage').innerText = dictionary[currentLang].garage;
+            document.getElementById('lbl-promo').innerText = dictionary[currentLang].promo;
 
             // Рендер Гаража
-            const garageBox = document.getElementById('garage-box');
-            garageBox.innerHTML = "";
-            myGarage.forEach((car, index) => {
-                const item = document.createElement('div');
-                item.className = "garage-item";
-                item.innerHTML = `
+            const gBox = document.getElementById('garage-ui');
+            gBox.innerHTML = "";
+            garage.forEach((car, i) => {
+                const el = document.createElement('div');
+                el.className = "garage-card";
+                el.innerHTML = `
                     <div>
-                        <strong style="font-size:14px;">${car.name}</strong><br>
-                        <span style="color:#10b981;">Cost: $${car.boughtPrice} -> Sell: $${car.sellPrice}</span>
+                        <div style="font-weight:700; font-size:14px;">${car.name}</div>
+                        <div style="color:var(--neon-green); font-size:12px; margin-top:4px;">Buy: $${car.buy} ➔ Est. Sell: $${car.sell}</div>
                     </div>
-                    <button class="btn btn-sell" onclick="sellCar(${index})">${langData[currentLang].sell}</button>
+                    <button class="btn btn-sell" onclick="liquidateCar(${i})">${dictionary[currentLang].sell}</button>
                 `;
-                garageBox.appendChild(item);
+                gBox.appendChild(el);
             });
 
-            // Сохранение в LocalStorage
-            localStorage.setItem('auc_balance', playerBalance);
-            localStorage.setItem('auc_garage', JSON.stringify(myGarage));
+            // Сохранение сессии
+            localStorage.setItem('c_bal', balance);
+            localStorage.setItem('c_gar', JSON.stringify(garage));
         }
 
-        // ЗАГРУЗКА НОВОЙ МАШИНЫ НА АУКЦИОН
-        function loadNewLot() {
-            clearInterval(timerInterval);
-            clearTimeout(botTimeout);
-            
-            // Берем случайную машину из базы
-            currentCar = carDatabase[Math.floor(Math.random() * carDatabase.length)];
-            currentPrice = currentCar.price;
-            lastBidder = "";
-            playerCurrentBid = 0;
-            secondsLeft = 4;
-            auctionActive = true;
+        function nextAuctionCycle() {
+            clearInterval(mainTimer);
+            clearTimeout(aiBrain);
 
-            document.getElementById('car-img').src = currentCar.img;
-            document.getElementById('car-name').innerText = currentCar.name;
-            document.getElementById('current-price').innerText = currentPrice;
-            document.getElementById('auction-timer').innerText = secondsLeft + "s";
-            document.getElementById('history-box').innerHTML = `<div class="bid-log bot-typing">Auction Started! Base price: $${currentPrice}</div>`;
-            
-            document.getElementById('btn-make-bid').style.display = "block";
-            document.getElementById('btn-next-lot').style.display = "none";
+            activeCar = carRegistry[Math.floor(Math.random() * carRegistry.length)];
+            activePrice = activeCar.base;
+            topBidder = "";
+            playerInvested = 0;
+            timeLeft = 4.0;
+            isLive = true;
 
-            // Запуск таймера и логики ботов
-            startTimer();
-            planBotAction();
+            document.getElementById('car-stage-img').src = activeCar.img;
+            document.getElementById('car-stage-title').innerText = activeCar.name;
+            document.getElementById('price-ui').innerText = "$" + activePrice;
+            document.getElementById('timer-ui').innerText = timeLeft.toFixed(1) + "s";
+            document.getElementById('timer-ui').style.background = "var(--neon-red)";
+            
+            document.getElementById('logs-ui').innerHTML = `<div class="log-line" style="color:var(--neon-blue)">[SYSTEM]: На торги выставлен новый лот. Стартовая цена: $${activePrice}</div>`;
+            
+            document.getElementById('btn-bid').style.display = "block";
+            document.getElementById('btn-next').style.display = "none";
+
+            runClock();
+            scheduleAiMove();
         }
 
-        // ТАЙМЕР АУКЦИОНА (4 СЕКУНДЫ)
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                secondsLeft--;
-                document.getElementById('auction-timer').innerText = secondsLeft + "s";
-
-                if (secondsLeft <= 0) {
-                    clearInterval(timerInterval);
-                    endAuction();
+        function runClock() {
+            mainTimer = setInterval(() => {
+                timeLeft -= 0.1;
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    clearInterval(mainTimer);
+                    evaluateWinner();
                 }
+                document.getElementById('timer-ui').innerText = timeLeft.toFixed(1) + "s";
             }, 1000);
         }
 
-        // СТАВКА ИГРОКА
-        function playerBid() {
-            if (!auctionActive) return;
+        function placeBid() {
+            if (!isLive) return;
 
-            let nextBidPrice = currentPrice + 10;
-            if (playerBalance < 10) {
-                alert(langData[currentLang].noMoney);
+            if (balance < 10) {
+                alert(dictionary[currentLang].noFunds);
                 return;
             }
 
-            // Списываем только шаг ставки (или блокируем залог)
-            playerBalance -= 10;
-            playerCurrentBid += 10;
-            currentPrice = nextBidPrice;
-            lastBidder = "Player";
-            secondsLeft = 4; // Сброс таймера
+            balance -= 10;
+            playerInvested += 10;
+            activePrice += 10;
+            topBidder = "Player";
+            timeLeft = 4.0; // Сброс таймера назад на 4 секунды
 
-            logBid("You", currentPrice);
-            document.getElementById('current-price').innerText = currentPrice;
-            updateUI();
-            
-            // Боты реагируют на ставку игрока
-            clearTimeout(botTimeout);
-            planBotAction();
+            addLog("You", activePrice);
+            document.getElementById('price-ui').innerText = "$" + activePrice;
+            renderUI();
+
+            clearTimeout(aiBrain);
+            scheduleAiMove();
         }
 
-        // ИИ БОТОВ
-        function planBotAction() {
-            if (!auctionActive) return;
+        function scheduleAiMove() {
+            if (!isLive) return;
 
-            // Шанс ставки бота зависит от текущей цены (чтобы боты не торговали до бесконечности)
-            let maxBotLimit = 125 + Math.floor(Math.random() * 15); // Предел ботов 120-140$
-            
-            if (currentPrice < maxBotLimit) {
-                let delay = 1000 + Math.random() * 2000; // бот думает от 1 до 3 секунд
-                botTimeout = setTimeout(() => {
-                    if (!auctionActive) return;
+            if (activePrice < activeCar.maxBot) {
+                let thinkingTime = 800 + Math.random() * 1800; // Боты реагируют в пределах 0.8 - 2.6 сек.
+                aiBrain = setTimeout(() => {
+                    if (!isLive) return;
 
-                    currentPrice += 10;
-                    let randomBotName = botNames[Math.floor(Math.random() * botNames.length)];
-                    lastBidder = randomBotName;
-                    secondsLeft = 4; // Сброс таймера
+                    activePrice += 10;
+                    let botName = virtualBidders[Math.floor(Math.random() * virtualBidders.length)];
+                    topBidder = botName;
+                    timeLeft = 4.0; // Сброс таймера ботом
 
-                    logBid(randomBotName, currentPrice);
-                    document.getElementById('current-price').innerText = currentPrice;
+                    addLog(botName, activePrice);
+                    document.getElementById('price-ui').innerText = "$" + activePrice;
                     
-                    planBotAction(); // планируем следующую ставку
-                }, delay);
+                    scheduleAiMove();
+                }, thinkingTime);
             }
         }
 
-        // ИСТОРИЯ СТАВОК
-        function logBid(name, price) {
-            const box = document.getElementById('history-box');
-            box.innerHTML += `<div class="bid-log"><strong>${name}</strong> placed a bid: <span style="color:#3b82f6;">$${price}</span></div>`;
-            box.scrollTop = box.scrollHeight;
+        function addLog(user, price) {
+            const container = document.getElementById('logs-ui');
+            let color = user === "You" ? "var(--neon-green)" : "var(--text-white)";
+            container.innerHTML += `<div class="log-line" style="color:${color}">➔ <b>${user}</b> предложил ставку: <b>$${price}</b></div>`;
+            container.scrollTop = container.scrollHeight;
         }
 
-        // ЗАВЕРШЕНИЕ АУКЦИОНА
-        function endAuction() {
-            auctionActive = false;
-            clearTimeout(botTimeout);
+        function evaluateWinner() {
+            isLive = false;
+            clearTimeout(aiBrain);
+            document.getElementById('timer-ui').style.background = "#374151";
 
-            if (lastBidder === "Player") {
-                // Игрок победил
-                alert(langData[currentLang].won);
-                
-                // Перепродажная цена на 25-40 долларов выше купленной
-                let randomMarkup = 25 + Math.floor(Math.random() * 16); 
-                let sellValue = currentPrice + randomMarkup;
-
-                myGarage.push({
-                    name: currentCar.name,
-                    boughtPrice: currentPrice,
-                    sellPrice: sellValue
+            if (topBidder === "Player") {
+                alert(dictionary[currentLang].winAlert);
+                // Наценка при перепродаже составляет от 25 до 40 долларов
+                let bonusProfit = 25 + Math.floor(Math.random() * 16); 
+                garage.push({
+                    name: activeCar.name,
+                    buy: activePrice,
+                    sell: activePrice + bonusProfit
                 });
-            } else if (lastBidder === "") {
-                // Никто не ставил
-                alert("Nobody placed a bid. Lot expired.");
+            } else if (topBidder === "") {
+                alert("Lot expired. No bids placed.");
             } else {
-                // Бот победил, возвращаем игроку его залог обратно!
-                if (playerCurrentBid > 0) {
-                    playerBalance += playerCurrentBid;
-                    alert(`${lastBidder} ${langData[currentLang].botWon}`);
+                // Если выиграл бот, возвращаем все деньги, которые игрок успел поставить на данный лот
+                if (playerInvested > 0) {
+                    balance += playerInvested;
+                    alert(`${topBidder} ${dictionary[currentLang].botAlert}`);
                 } else {
-                    alert(`${lastBidder} won the lot.`);
+                    alert(`${topBidder} won the lot.`);
                 }
             }
 
-            document.getElementById('btn-make-bid').style.display = "none";
-            document.getElementById('btn-next-lot').style.display = "block";
-            updateUI();
+            document.getElementById('btn-bid').style.display = "none";
+            document.getElementById('btn-next').style.display = "block";
+            renderUI();
         }
 
-        // ПРОДАЖА МАШИНЫ ИЗ ГАРАЖА
-        function sellCar(index) {
-            let profit = myGarage[index].sellPrice;
-            playerBalance += profit;
-            myGarage.splice(index, 1);
-            alert(langData[currentLang].soldSuccess);
-            updateUI();
+        function liquidateCar(index) {
+            balance += garage[index].sell;
+            garage.splice(index, 1);
+            renderUI();
         }
 
-        function nextLot() {
-            loadNewLot();
+        function skipToNext() {
+            nextAuctionCycle();
         }
 
-        // СМЕНА ЯЗЫКА
-        function changeLanguage() {
+        function applyPromo() {
+            const input = document.getElementById('promo-input').value.trim();
+            if (input === "seevent2026") {
+                balance += 500;
+                alert(dictionary[currentLang].promoSuccess);
+                document.getElementById('promo-input').value = "";
+                renderUI();
+            } else {
+                alert(dictionary[currentLang].promoFail);
+            }
+        }
+
+        function switchLanguage() {
             currentLang = document.getElementById('lang-select').value;
-            updateUI();
+            renderUI();
+            if (!isLive) {
+                document.getElementById('btn-next').innerText = dictionary[currentLang].nextBtn;
+            }
         }
 
-        // Старт игры
-        window.onload = initGame;
+        window.onload = startSystem;
     </script>
 </body>
 </html>
