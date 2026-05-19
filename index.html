@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEXUS AUCTION — Cyberpunk Edition</title>
+    <title>NEXUS AUCTION — Compact Mobile Edition</title>
     <style>
         :root {
             --bg-dark: #020308;
-            --panel-glass: rgba(6, 10, 26, 0.8);
+            --panel-glass: rgba(6, 10, 26, 0.85);
             --panel-border: rgba(0, 240, 255, 0.3);
             --neon-blue: #00f0ff;
             --neon-green: #00ff66;
@@ -24,164 +24,144 @@
             color: var(--text-white);
             font-family: 'Segoe UI', Roboto, sans-serif;
             height: 100vh;
-            overflow: hidden;
+            width: 100vw;
+            overflow: hidden; /* Skroll butkul o'chirildi */
             display: flex;
             flex-direction: column;
             position: relative;
             -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
         }
 
-        /* DYNAMIC MOVING CYBER GRID (Harakatlanuvchi jonli fon) */
+        /* LIVE BACKGROUND GRID */
         .cyber-grid {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center top;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
             z-index: 1;
-            transform-origin: center top;
-            animation: gridMove 12s infinite linear;
+            animation: gridMove 15s infinite linear;
         }
-
         @keyframes gridMove {
             0% { background-position: 0 0; }
-            100% { background-position: 0 40px; }
+            100% { background-position: 0 30px; }
         }
 
         .bg-glows {
             position: absolute;
             width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 30%, rgba(189, 89, 255, 0.15) 0%, transparent 60%),
-                        radial-gradient(circle at 10% 80%, rgba(0, 240, 255, 0.1) 0%, transparent 40%);
+            background: radial-gradient(circle at 50% 20%, rgba(189, 89, 255, 0.1) 0%, transparent 50%);
             z-index: 1;
             pointer-events: none;
         }
 
-        /* TOP PREMIUM NAVIGATION HUB */
+        /* FIXED ONE-SCREEN TOP HEADER */
         .nexus-header {
-            background: rgba(3, 5, 14, 0.9);
+            background: rgba(3, 5, 14, 0.95);
             border-bottom: 2px solid var(--neon-blue);
-            padding: 0 20px;
+            padding: 0 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 75px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 5px 25px rgba(0, 240, 255, 0.2);
+            height: 60px;
             z-index: 10;
-            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
         }
 
         .brand-title {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px var(--neon-blue);
-            color: #fff;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 8px var(--neon-blue);
         }
 
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .asset-badge-cash {
             background: rgba(0, 255, 102, 0.1);
-            border: 2px solid var(--neon-green);
-            padding: 6px 14px;
-            border-radius: 12px;
+            border: 1.5px solid var(--neon-green);
+            padding: 4px 8px;
+            border-radius: 8px;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 13px;
             color: var(--neon-green);
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
         }
 
         .asset-badge-diamond {
             background: rgba(0, 229, 255, 0.1);
-            border: 2px solid var(--neon-diamond);
-            padding: 6px 14px;
-            border-radius: 12px;
+            border: 1.5px solid var(--neon-diamond);
+            padding: 4px 8px;
+            border-radius: 8px;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 13px;
             color: var(--neon-diamond);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
         }
 
-        .promo-box { display: flex; gap: 6px; }
-        .promo-box input {
-            background: #090e22;
-            color: white;
-            border: 1px solid var(--panel-border);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            width: 90px;
-            outline: none;
-        }
-        .btn-promo-ok {
+        .btn-menu-promo {
             background: var(--neon-purple);
             color: white;
             border: none;
-            padding: 8px 14px;
-            font-weight: bold;
+            padding: 5px 10px;
+            font-weight: 900;
+            font-size: 12px;
             border-radius: 8px;
             cursor: pointer;
             box-shadow: 0 0 10px var(--neon-purple);
         }
 
-        /* MAIN CENTERED STAGE LAYOUT */
+        /* APP MAIN WORKSPACE — FULLY FITS ONE SCREEN */
         .nexus-workspace {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 15px;
-            gap: 15px;
+            padding: 10px;
+            gap: 10px;
             box-sizing: border-box;
             z-index: 5;
-            position: relative;
-            height: calc(100vh - 75px);
+            height: calc(100vh - 60px);
+            justify-content: space-between;
         }
 
-        /* CENTER VIEWPORT SYSTEM (Moshina Turadigan Ulkan Markaz) */
+        /* MAIN CENTERED PANEL */
         .center-showcase {
             flex: 1;
             background: var(--panel-glass);
-            border: 1.5px solid var(--panel-border);
-            border-radius: 24px;
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 20px;
+            padding: 12px;
+            box-sizing: border-box;
             overflow: hidden;
-            box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.1);
         }
 
         .mode-indicator {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 10px;
+            left: 10px;
             background: #000;
-            border: 1.5px solid var(--neon-blue);
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-size: 12px;
+            border: 1px solid var(--neon-blue);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        /* BRAND NEW FULLSIZE STAGE CANVAS CONTAINER */
+        /* CANVAS ENGINE HOLDER */
         .car-viewport-stage {
             width: 100%;
-            height: 55%;
+            height: 45%;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         canvas {
@@ -190,115 +170,108 @@
             max-height: 100%;
         }
 
-        /* SCI-FI HUD PANEL FOR DATA */
+        /* COMPACT HUD PANEL */
         .hud-metrics-panel {
             display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            grid-template-columns: 1.2fr 1fr 0.8fr;
             align-items: center;
-            background: rgba(2, 4, 12, 0.8);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 15px 20px;
-            border-radius: 16px;
-            gap: 10px;
+            background: rgba(2, 4, 12, 0.9);
+            padding: 10px;
+            border-radius: 12px;
+            gap: 5px;
+            border: 1px solid rgba(255,255,255,0.03);
         }
 
-        .car-info h2 { margin: 0; font-size: 22px; font-weight: 900; color: #fff; }
+        .car-info h2 { margin: 0; font-size: 15px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .tier-tag {
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
             font-weight: 800;
             text-transform: uppercase;
-            margin-top: 5px;
+            margin-top: 2px;
         }
 
         .live-price-zone { text-align: center; }
-        .live-price-tag { font-size: 36px; font-weight: 900; font-family: monospace; text-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
+        .live-price-tag { font-size: 20px; font-weight: 900; font-family: monospace; }
 
         .time-zone { text-align: right; }
         .countdown-display { 
             background: var(--neon-red); 
             color: white; 
-            padding: 6px 16px; 
-            border-radius: 12px; 
+            padding: 4px 8px; 
+            border-radius: 8px; 
             font-weight: 900; 
-            font-size: 14px;
-            box-shadow: 0 0 12px var(--neon-red);
+            font-size: 12px;
         }
 
-        /* LIVE LIVE FEED TELEMETRY */
+        /* TERMINAL FEEDS */
         .terminal-log-box {
-            height: 65px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 12px;
-            padding: 8px 15px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 6px 10px;
             overflow-y: auto;
             font-family: monospace;
-            font-size: 12px;
-            border: 1px solid rgba(255,255,255,0.03);
+            font-size: 11px;
         }
-        .feed-item { padding: 2px 0; }
+        .feed-item { padding: 1px 0; }
 
-        /* THE MASSIVE BOTTOM ACTION BUTTON */
+        /* THE ACTION BUTTON */
         .btn-nexus-core-bid {
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
             color: white;
             border: none;
-            padding: 20px;
-            font-size: 20px;
+            padding: 14px;
+            font-size: 15px;
             font-weight: 900;
-            border-radius: 18px;
+            border-radius: 12px;
             cursor: pointer;
             text-transform: uppercase;
             width: 100%;
-            box-shadow: 0 5px 25px rgba(189, 89, 255, 0.4);
-            letter-spacing: 2px;
-            transition: transform 0.05s;
+            box-shadow: 0 4px 15px rgba(189, 89, 255, 0.3);
+            letter-spacing: 1px;
         }
-        .btn-nexus-core-bid:active { transform: scale(0.97); }
 
-        /* BOTTOM HORIZONTAL GARAGE OVERVIEW (Gorizontal silliq garaj) */
+        /* COMPACT HORIZONTAL TRAY (GARAJ) */
         .bottom-garage-tray {
             background: var(--panel-glass);
-            border: 1.5px solid var(--panel-border);
-            border-radius: 20px;
-            padding: 12px 20px;
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            height: 140px;
+            gap: 6px;
+            height: 105px;
             box-sizing: border-box;
         }
 
         .garage-header-title {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 900;
             text-transform: uppercase;
             color: var(--neon-purple);
-            letter-spacing: 1px;
         }
 
         .garage-vault-horizontal-scroll {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             overflow-x: auto;
             white-space: nowrap;
-            padding-bottom: 5px;
+            flex: 1;
         }
-        /* Scrollbarni chiroyli qilish */
-        .garage-vault-horizontal-scroll::-webkit-scrollbar { height: 4px; }
-        .garage-vault-horizontal-scroll::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
+        .garage-vault-horizontal-scroll::-webkit-scrollbar { height: 0px; }
 
         .garage-item-card {
             display: inline-flex;
             flex-direction: column;
             justify-content: space-between;
-            background: rgba(14, 21, 46, 0.9);
+            background: rgba(14, 21, 46, 0.95);
             border: 1px solid rgba(255,255,255,0.05);
-            padding: 10px 14px;
-            border-radius: 12px;
-            min-width: 220px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            min-width: 160px;
             box-sizing: border-box;
         }
 
@@ -306,21 +279,51 @@
             background: var(--neon-green);
             color: #000;
             border: none;
-            padding: 4px 10px;
+            padding: 3px;
             font-weight: 900;
-            font-size: 11px;
-            border-radius: 6px;
+            font-size: 10px;
+            border-radius: 4px;
             cursor: pointer;
-            margin-top: 4px;
             width: 100%;
         }
 
-        @media (max-width: 768px) {
-            .hud-metrics-panel { grid-template-columns: 1fr; text-align: center; gap: 12px; }
-            .time-zone { text-align: center; }
-            .car-viewport-stage { height: 160px; }
-            body { height: auto; overflow-y: auto; }
-            .nexus-workspace { height: auto; }
+        /* NEW DIALOG POPUP MENU (PROMO SENSATSION OKNMASI) */
+        .promo-modal-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .promo-modal-card {
+            background: #090e24;
+            border: 2px solid var(--neon-purple);
+            border-radius: 16px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 0 25px var(--neon-purple);
+        }
+        .promo-modal-card h3 { margin: 0 0 15px 0; font-size: 16px; text-transform: uppercase; color: var(--neon-purple); letter-spacing: 1px;}
+        .promo-modal-card input {
+            width: 100%;
+            background: #02040a;
+            color: #fff;
+            border: 1px solid var(--panel-border);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            outline: none;
+            text-align: center;
+            font-weight: bold;
+        }
+        .modal-btn-group { display: flex; gap: 8px; }
+        .modal-btn-group button {
+            flex: 1; padding: 10px; font-weight: 900; font-size: 13px; border-radius: 8px; border: none; cursor: pointer;
         }
     </style>
 </head>
@@ -330,13 +333,10 @@
     <div class="bg-glows"></div>
 
     <div class="nexus-header">
-        <div class="brand-title">NEXUS PREMIUM</div>
+        <div class="brand-title">NEXUS M-EDITION</div>
         
         <div class="header-controls">
-            <div class="promo-box">
-                <input type="text" id="promo-field-node" placeholder="Promo...">
-                <button class="btn-promo-ok" onclick="claimPromoToken()">OK</button>
-            </div>
+            <button class="btn-menu-promo" onclick="togglePromoMenu(true)">🎁 PROMO</button>
             <div class="asset-badge-diamond">💎 <span id="txt-diamonds">0</span></div>
             <div class="asset-badge-cash">💵 $<span id="txt-bankroll">150</span></div>
         </div>
@@ -348,16 +348,15 @@
             <div class="mode-indicator" id="lbl-mode-state">Standart Mode</div>
             
             <div class="car-viewport-stage">
-                <canvas id="carCanvas" width="460" height="220"></canvas>
+                <canvas id="carCanvas" width="450" height="200"></canvas>
             </div>
 
             <div class="hud-metrics-panel">
                 <div class="car-info">
-                    <h2 id="txt-car-name">Loading Live Asset...</h2>
+                    <h2 id="txt-car-name">Loading Asset...</h2>
                     <div class="tier-tag" id="lbl-tier-tag">Standart</div>
                 </div>
                 <div class="live-price-zone">
-                    <div style="font-size: 11px; text-transform: uppercase; color: #7e8ea6; letter-spacing: 1px;">Текущая Ставка</div>
                     <div id="txt-price" class="live-price-tag" style="color: var(--neon-green);">$0</div>
                 </div>
                 <div class="time-zone">
@@ -371,11 +370,21 @@
         </div>
 
         <div class="bottom-garage-tray">
-            <div class="garage-header-title" id="lbl-garage-heading">Личный Гараж (0)</div>
-            <div class="garage-vault-horizontal-scroll" id="garage-vault-container">
-                </div>
+            <div class="garage-header-title" id="lbl-garage-heading">Гараж (0)</div>
+            <div class="garage-vault-horizontal-scroll" id="garage-vault-container"></div>
         </div>
 
+    </div>
+
+    <div class="promo-modal-overlay" id="promoMenuOverlay">
+        <div class="promo-modal-card">
+            <h3>АКТИВАЦИЯ ПРОМОКОДА</h3>
+            <input type="text" id="promo-field-node" placeholder="ВВЕДИТЕ КОД...">
+            <div class="modal-btn-group">
+                <button style="background:#374151; color:white;" onclick="togglePromoMenu(false)">ЗАКРЫТЬ</button>
+                <button style="background:var(--neon-purple); color:white;" onclick="claimPromoToken()">ОК</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -429,126 +438,56 @@
             launchNewAuctionSession();
         }
 
+        function togglePromoMenu(show) {
+            document.getElementById('promoMenuOverlay').style.display = show ? 'flex' : 'none';
+            if(show) document.getElementById('promo-field-node').value = "";
+        }
+
         function evaluatePremiumState() {
             isPremiumUnlockedMode = (diamondBalance >= 200);
         }
 
-        // ADVANCED 3D-STAGE VECHICLE GRAPHICS CONTROLLER (Yangi avlod neon chizgich)
         function drawVectorCar(color, type) {
             const canvas = document.getElementById('carCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // 3D NEON PLATFORM PODIUM (Ostidagi Aylana Podium)
-            ctx.shadowBlur = 20;
-            ctx.shadowColor = color;
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.ellipse(230, 155, 170, 18, 0, 0, Math.PI * 2);
-            ctx.stroke();
+            ctx.shadowBlur = 15; ctx.shadowColor = color; ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.ellipse(230, 145, 150, 14, 0, 0, Math.PI * 2); ctx.stroke();
 
-            // PODIUM GRID LINES (Platforma chiziqlari)
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "rgba(255,255,255,0.1)";
-            for(let i=70; i<400; i+=30){
-                ctx.beginPath(); ctx.moveTo(i, 155); ctx.lineTo(i + (i-230)/2, 173); ctx.stroke();
-            }
+            ctx.shadowBlur = 25; ctx.fillStyle = color; ctx.fillRect(120, 137, 200, 6);
 
-            // CAR UNDERGLOW NEON (Moshina ostidagi neon)
-            ctx.shadowBlur = 35;
-            ctx.shadowColor = color;
-            ctx.fillStyle = color;
-            ctx.fillRect(110, 145, 230, 8);
-
-            // MAIN CAR STRUCTURE
-            ctx.shadowBlur = 20;
-            ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 3;
-
+            ctx.shadowBlur = 15; ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2.5;
             ctx.beginPath();
             if (type === "sport") {
-                ctx.moveTo(70, 130);
-                ctx.lineTo(105, 100); 
-                ctx.lineTo(180, 82); 
-                ctx.lineTo(275, 82); 
-                ctx.lineTo(335, 104); 
-                ctx.lineTo(390, 118); 
-                ctx.lineTo(400, 130);
-                ctx.lineTo(390, 142);
-                ctx.lineTo(65, 142);
-                // Rear Wing (Spoiler)
-                ctx.moveTo(68, 125); ctx.lineTo(58, 105); ctx.lineTo(82, 105);
+                ctx.moveTo(80, 125); ctx.lineTo(110, 98); ctx.lineTo(180, 82); ctx.lineTo(265, 82); 
+                ctx.lineTo(320, 102); ctx.lineTo(370, 115); ctx.lineTo(380, 125); ctx.lineTo(370, 135); ctx.lineTo(75, 135);
+                ctx.moveTo(78, 120); ctx.lineTo(70, 102); ctx.lineTo(92, 102);
             } else if (type === "suv") {
-                ctx.moveTo(65, 138);
-                ctx.lineTo(68, 88);
-                ctx.lineTo(140, 70);
-                ctx.lineTo(270, 70);
-                ctx.lineTo(325, 96);
-                ctx.lineTo(390, 102);
-                ctx.lineTo(395, 138);
-                ctx.lineTo(65, 138);
+                ctx.moveTo(75, 132); ctx.lineTo(78, 88); ctx.lineTo(140, 72); ctx.lineTo(260, 72); 
+                ctx.lineTo(310, 96); ctx.lineTo(370, 102); ctx.lineTo(375, 132); ctx.lineTo(75, 132);
             } else {
-                ctx.moveTo(65, 134);
-                ctx.lineTo(90, 102);
-                ctx.lineTo(155, 82);
-                ctx.lineTo(285, 82);
-                ctx.lineTo(335, 108);
-                ctx.lineTo(390, 114);
-                ctx.lineTo(390, 134);
-                ctx.lineTo(65, 134);
+                ctx.moveTo(75, 128); ctx.lineTo(98, 98); ctx.lineTo(155, 82); ctx.lineTo(275, 82); 
+                ctx.lineTo(320, 106); ctx.lineTo(370, 112); ctx.lineTo(370, 128); ctx.lineTo(75, 128);
             }
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
+            ctx.closePath(); ctx.fill(); ctx.stroke();
 
-            // WINDSHIELD GLASSMORPHISM
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = "#030614";
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 1.5;
+            ctx.shadowBlur = 0; ctx.fillStyle = "#030614"; ctx.strokeStyle = color; ctx.lineWidth = 1;
             ctx.beginPath();
-            if (type === "sport") {
-                ctx.moveTo(155, 88); ctx.lineTo(245, 88); ctx.lineTo(275, 106); ctx.lineTo(135, 106);
-            } else if (type === "suv") {
-                ctx.moveTo(135, 78); ctx.lineTo(265, 78); ctx.lineTo(290, 102); ctx.lineTo(120, 102);
-            } else {
-                ctx.moveTo(145, 88); ctx.lineTo(270, 88); ctx.lineTo(295, 108); ctx.lineTo(130, 108);
-            }
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
+            if (type === "sport") { ctx.moveTo(155, 88); ctx.lineTo(235, 88); ctx.lineTo(265, 104); ctx.lineTo(135, 104); }
+            else if (type === "suv") { ctx.moveTo(135, 78); ctx.lineTo(255, 78); ctx.lineTo(280, 100); ctx.lineTo(120, 100); }
+            else { ctx.moveTo(145, 88); ctx.lineTo(260, 88); ctx.lineTo(285, 106); ctx.lineTo(130, 106); }
+            ctx.closePath(); ctx.fill(); ctx.stroke();
 
-            // MATRIX RIMS AND TIRES (G'ildirak va neon disklar)
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = "#ffffff";
-            ctx.fillStyle = "#040713";
-            ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 4.5;
-
-            // Front
-            ctx.beginPath(); ctx.arc(135, 140, 26, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-            ctx.strokeStyle = color; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.arc(135, 140, 14, 0, Math.PI * 2); ctx.stroke();
-
-            // Rear
-            ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 4.5;
-            ctx.beginPath(); ctx.arc(315, 140, 26, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-            ctx.strokeStyle = color; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.arc(315, 140, 14, 0, Math.PI * 2); ctx.stroke();
+            ctx.shadowBlur = 8; ctx.shadowColor = "#ffffff"; ctx.fillStyle = "#040713"; ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.arc(145, 132, 22, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+            ctx.beginPath(); ctx.arc(305, 132, 22, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
             
-            // X-LASER OPTICS (Farlar)
-            ctx.shadowBlur = 20;
-            ctx.shadowColor = varColor('--neon-blue');
-            ctx.strokeStyle = varColor('--neon-blue');
-            ctx.lineWidth = 4;
+            ctx.shadowBlur = 15; ctx.shadowColor = varColor('--neon-blue'); ctx.strokeStyle = varColor('--neon-blue'); ctx.lineWidth = 3.5;
             ctx.beginPath();
-            if (type === "sport") {
-                ctx.moveTo(375, 118); ctx.lineTo(393, 122);
-            } else {
-                ctx.moveTo(370, 112); ctx.lineTo(388, 116);
-            }
+            if (type === "sport") { ctx.moveTo(355, 115); ctx.lineTo(371, 119); }
+            else { ctx.moveTo(350, 110); ctx.lineTo(366, 114); }
             ctx.stroke();
         }
 
@@ -559,23 +498,23 @@
         function syncVisualInterface() {
             document.getElementById('txt-bankroll').innerText = Math.floor(cashBalance).toLocaleString();
             document.getElementById('txt-diamonds').innerText = diamondBalance.toLocaleString();
-            document.getElementById('lbl-garage-heading').innerText = `Личный Гараж (${userVault.length})`;
+            document.getElementById('lbl-garage-heading').innerText = `Гараж (${userVault.length})`;
 
             const modeLbl = document.getElementById('lbl-mode-state');
             const tierTag = document.getElementById('lbl-tier-tag');
             
             if (isPremiumUnlockedMode) {
-                modeLbl.innerText = "⭐ Premium Mode Active";
+                modeLbl.innerText = "⭐ Premium Active";
                 modeLbl.style.color = "var(--neon-purple)";
                 modeLbl.style.borderColor = "var(--neon-purple)";
-                tierTag.innerText = "Hypercar / Tier S";
+                tierTag.innerText = "Hypercar / S";
                 tierTag.style.color = "var(--neon-purple)";
                 tierTag.style.background = "rgba(189, 89, 255, 0.2)";
             } else {
-                modeLbl.innerText = "⛓️ Standart Mode (Need 200 💎)";
+                modeLbl.innerText = "⛓️ Standart Mode";
                 modeLbl.style.color = "var(--neon-blue)";
                 modeLbl.style.borderColor = "var(--neon-blue)";
-                tierTag.innerText = "Standart Asset";
+                tierTag.innerText = "Standart";
                 tierTag.style.color = "var(--neon-blue)";
                 tierTag.style.background = "rgba(0, 240, 255, 0.1)";
             }
@@ -593,13 +532,10 @@
                 node.className = "garage-item-card";
                 node.innerHTML = `
                     <div>
-                        <div style="font-weight:900; font-size:13px; color:#fff;">${item.name}</div>
-                        <div style="color:var(--neon-green); font-size:11px; margin-top:2px;">Цена: $${item.buy.toLocaleString()}</div>
+                        <div style="font-weight:900; font-size:12px; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.name}</div>
+                        <div style="color:var(--neon-green); font-size:10px; margin-top:1px;">Продажа: +$${item.sell.toLocaleString()}</div>
                     </div>
-                    <div>
-                        <div style="color:#7e8ea6; font-size:10px;">Выкуп: +$${item.sell.toLocaleString()}</div>
-                        <button class="btn-sell-asset" onclick="liquidateAsset(${index})">Продать</button>
-                    </div>
+                    <button class="btn-sell-asset" onclick="liquidateAsset(${index})">Продать</button>
                 `;
                 container.appendChild(node);
             });
@@ -613,7 +549,6 @@
         function launchNewAuctionSession() {
             clearInterval(threadClock);
             clearTimeout(threadAi);
-
             evaluatePremiumState();
 
             const activeRegistry = isPremiumUnlockedMode ? premiumRegistry : standartRegistry;
@@ -631,7 +566,7 @@
             document.getElementById('txt-price').innerText = "$" + realTimePrice.toLocaleString();
             document.getElementById('txt-timer').innerText = dynamicTimer.toFixed(1) + "s";
             
-            document.getElementById('terminal-feed-logs').innerHTML = `<div class="feed-item" style="color:var(--neon-blue)">[SYSTEM]: Новый лот выставлен. Начальная ставка: $${realTimePrice.toLocaleString()}</div>`;
+            document.getElementById('terminal-feed-logs').innerHTML = `<div class="feed-item" style="color:var(--neon-blue)">[SYSTEM]: Старт торгов лота $${realTimePrice.toLocaleString()}</div>`;
             document.getElementById('btn-master-action').onclick = submitBidAction;
 
             syncVisualInterface();
@@ -653,7 +588,6 @@
 
         function submitBidAction() {
             if (!isAuctionSessionLive) return;
-
             let bidStep = isPremiumUnlockedMode ? 1000 : 10;
 
             if (cashBalance < bidStep) {
@@ -712,18 +646,18 @@
             clearTimeout(threadAi);
 
             if (auctionLeader === "Player") {
-                alert("🎉 Вы выиграли аукцион! Машина добавлена в Гараж.");
+                alert("🎉 Победитель! Машина отправлена в Гараж.");
                 userVault.push({
                     name: currentAsset.name,
                     buy: realTimePrice,
                     sell: realTimePrice + currentAsset.margin
                 });
             } else if (auctionLeader === "") {
-                alert("Время истекло.");
+                alert("Торги закрыты.");
             } else {
                 if (playerBidInvested > 0) {
                     cashBalance += playerBidInvested;
-                    alert(`${auctionLeader} выиграл. Ваши ставки возвращены.`);
+                    alert(`${auctionLeader} выиграл. Ставки возвращены.`);
                 } else {
                     alert(`${auctionLeader} забрал лот.`);
                 }
@@ -743,43 +677,53 @@
         function claimPromoToken() {
             const inputField = document.getElementById('promo-field-node').value.trim();
             
+            if (uniqueClaimedPromos.includes(inputField)) {
+                alert("Этот промокод уже был активирован на аккаунте!");
+                return;
+            }
+
             if (inputField === "kievka") {
-                if (uniqueClaimedPromos.includes(inputField)) {
-                    alert("Вы уже использовали этот код!");
-                    return;
-                }
                 cashBalance += 999999;
                 diamondBalance += 999999;
                 uniqueClaimedPromos.push(inputField);
-                alert("👑 Секретный код создателя применен! +$999,999 и +999,999 💎");
-                document.getElementById('promo-field-node').value = "";
+                alert("👑 Секретный код создателя! +$999,999 и +999,999 💎");
+                togglePromoMenu(false);
+                evaluatePremiumState();
+                syncVisualInterface();
+            }
+            else if (inputField === "newupdatev06") {
+                diamondBalance += 40;
+                uniqueClaimedPromos.push(inputField);
+                alert("💎 Успешно! Получено: 40 Бриллиантов.");
+                togglePromoMenu(false);
+                evaluatePremiumState();
+                syncVisualInterface();
+            }
+            else if (inputField === "oclock8") {
+                diamondBalance += 30;
+                cashBalance += 250;
+                uniqueClaimedPromos.push(inputField);
+                alert("🎁 Успешно! Получено: 30 💎 и +$250.");
+                togglePromoMenu(false);
                 evaluatePremiumState();
                 syncVisualInterface();
             }
             else if (inputField === "brilliantv03") {
-                if (uniqueClaimedPromos.includes(inputField)) {
-                    alert("Уже использовано!");
-                    return;
-                }
                 diamondBalance += 20;
                 uniqueClaimedPromos.push(inputField);
-                alert("💎 +20 Бриллиантов.");
-                document.getElementById('promo-field-node').value = "";
+                alert("💎 Получено: 20 Бриллиантов.");
+                togglePromoMenu(false);
                 evaluatePremiumState();
                 syncVisualInterface();
             } else if (inputField === "seevent2026" || inputField === "welecet200") {
-                if (uniqueClaimedPromos.includes(inputField)) {
-                    alert("Уже использовано!");
-                    return;
-                }
                 let bonus = inputField === "seevent2026" ? 500 : 800;
                 cashBalance += bonus;
                 uniqueClaimedPromos.push(inputField);
-                alert(`💵 +$${bonus}`);
-                document.getElementById('promo-field-node').value = "";
+                alert(`💵 Начислено: +$${bonus}`);
+                togglePromoMenu(false);
                 syncVisualInterface();
             } else {
-                alert("Неверный код.");
+                alert("Неверный промокод.");
             }
         }
 
